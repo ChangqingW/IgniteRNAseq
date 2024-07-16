@@ -28,6 +28,25 @@ options(digits=3)
 options(width=90)
 ```
 
+```{r downloads}
+if (!file.exists("~/filtered_sorted.bam") | !file.exists("~/filtered_sorted.bam.bai") {
+  options(timeout = max(600, getOption("timeout")))
+  download.file("https://zenodo.org/records/12751214/files/filtered_sorted.bam?download=1", "filtered_sorted.bam", mode = 'wb')
+  download.file("https://zenodo.org/records/12751214/files/filtered_sorted.bam.bai?download=1", "filtered_sorted.bam.bai", mode = 'wb')
+  bam <- "filtered_sorted.bam"
+} else {
+  bam <- "~/filtered_sorted.bam"
+}
+
+if (!file.exists("~/subset_GRCh38.fa")) {
+  download.file("https://zenodo.org/records/12751214/files/subset_GRCh38.fa.gz?download=1", "subset_GRCh38.fa.gz", mode = 'wb')
+  R.utils::gunzip("subset_GRCh38.fa.gz", destname = "subset_GRCh38.fa", remove = FALSE)
+  fa <- "subset_GRCh38.fa"
+} else {
+  fa <- "~/subset_GRCh38.fa"
+}
+```
+
 ```{r setup, eval=TRUE, message=FALSE}
 library(FLAMES)
 library(SingleCellExperiment)
@@ -98,8 +117,8 @@ in our data.
 
 ```{r mutation_discovery}
 mutation_discovery_tb <- FLAMES::find_variants(
-  '~/filtered_sorted.bam',
-  '~/subset_GRCh38.fa',
+  bam,
+  fa,
   system.file("extdata", "filtered.gtf", package = "IgniteRNAseq"),
   min_nucleotide_depth = 100,
   homopolymer_window = 3,
@@ -124,7 +143,7 @@ are correlated with our clustering.
 level:
 ```{r mutation_calling}
 snps_tb <- FLAMES::sc_mutations(
-  '~/filtered_sorted.bam',
+  bam,
   seqnames = as.character(mutation_discovery_tb$seqnames),
   positions = mutation_discovery_tb$pos,
   indel = F,
