@@ -1,2 +1,4 @@
-*.html
-*.R
+*.bam
+*.bam.bai
+*.fa
+*.fa.gz

@@ -19,7 +19,11 @@ Imports:
     limma,
     scater,
     scran,
-    SingleCellExperiment
+    SingleCellExperiment,
+    tidyverse,
+    qs,
+    R.utils,
+    scuttle
 Depends: 
     Biobase
 Suggests: 
