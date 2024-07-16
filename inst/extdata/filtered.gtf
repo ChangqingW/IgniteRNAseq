@@ -1,0 +1,5 @@
+chrM	ENSEMBL	gene	7020	7045	.	+	.	gene_id "ENSG00000198804.2"; gene_type "protein_coding"; gene_name "MT-CO1"; level 3; hgnc_id "HGNC:7419";
+chrM	ENSEMBL	gene	8200	8269	.	+	.	gene_id "ENSG00000198712.1"; gene_type "protein_coding"; gene_name "MT-CO2"; level 3; hgnc_id "HGNC:7421";
+chrM	ENSEMBL	gene	9100	9150	.	+	.	gene_id "ENSG00000198899.2"; gene_type "protein_coding"; gene_name "MT-ATP6"; level 3; hgnc_id "HGNC:7414";
+chrM	ENSEMBL	gene	11700	11750	.	+	.	gene_id "ENSG00000198886.2"; gene_type "protein_coding"; gene_name "MT-ND4"; level 3; hgnc_id "HGNC:7459";
+chr19	HAVANA	gene	48965820	48965840	.	+	.	gene_id "ENSG00000087086.15"; gene_type "protein_coding"; gene_name "FTL"; level 2; hgnc_id "HGNC:3999"; havana_gene "OTTHUMG00000183332.2";

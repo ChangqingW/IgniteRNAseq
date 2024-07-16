@@ -1,0 +1,242 @@
+---
+title: "Igniting full-length isoform and mutation analysis of single-cell RNA-seq data with FLAMES"
+author:
+  - name: Changqing Wang
+    affiliation: The Walter and Eliza Hall Institute of Medical Research, 1G Royal Parade, Parkville, VIC 3052, Melbourne, Australia; Department of Medical Biology, The University of Melbourne, Parkville, VIC 3010, Melbourne, Australia
+date: "16 July 2024"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FLAMES Workshop}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Abstract
+In this vignette, we will walk through the `FLAMES` single-cell pipeline, from 
+de-multiplexing raw FASTQ files to identifying and quantifying transcripts. We
+then perform analysis including single nucleotide polymorphism (SNP), 
+differential transcript expression analysis and differential transcript usage 
+analysis. We will use the cell line mixture data from Tian *et al.* (2021).
+
+# Introduction
+WIP
+
+# Set-up
+
+```{r setup0, message=FALSE, echo = FALSE}
+options(digits=3)
+options(width=90)
+```
+
+```{r setup, eval=TRUE, message=FALSE}
+library(FLAMES)
+library(SingleCellExperiment)
+library(scater)
+library(tidyverse)
+library(ggplot2)
+library(edgeR)
+library(limma)
+```
+
+```{r downloads}
+if (!file.exists("filtered_sorted.bam")) {
+  options(timeout = max(600, getOption("timeout")))
+  download.file("https://zenodo.org/records/12751214/files/filtered_sorted.bam?download=1", "filtered_sorted.bam", mode = 'wb')
+  download.file("https://zenodo.org/records/12751214/files/filtered_sorted.bam.bai?download=1", "filtered_sorted.bam.bai", mode = 'wb')
+}
+
+if (!file.exists("subset_GRCh38.fa")) {
+  download.file("https://zenodo.org/records/12751214/files/subset_GRCh38.fa.gz?download=1", "subset_GRCh38.fa.gz", mode = 'wb')
+  R.utils::gunzip("subset_GRCh38.fa.gz", destname = "subset_GRCh38.fa", remove = FALSE)
+}
+```
+
+# Read pre-processing
+
+The FASTQ files need to be de-multiplexed first, i.e. identifiying the cell
+barcode:
+```{r barcode1}
+read_lines(system.file("extdata/fastq/musc_rps24.fastq.gz", package = "FLAMES"),
+           n_max = 4)
+```
+FLAMES provides the `find_barcode` function to identify and trim the barcodes:
+```{r barcode2}
+example("find_barcode")
+
+read_lines(file.path(outdir, "demultiplexed.fq.gz"), n_max = 2)
+```
+
+# Running FLAMES
+```{r}
+# WIP
+# example code for running pipeline
+```
+
+After running the pipeline, we get a `SingleCellExperiment` object and we can
+finally start some analysis.
+
+# Data pre-processing 
+
+```{r load_data}
+sce <- qs::qread(system.file("extdata", "sce.qs", package = "IgniteRNAseq"))
+sce
+altExp(sce, 'gene')
+```
+
+We can use Bioconductor packages for normalization, dimensionality reduction and
+clustering:
+```{r sce_preprocessing}
+altExp(sce, 'gene') <- altExp(sce, 'gene') |>
+  scuttle::logNormCounts() |>
+  scater::runPCA() |>
+  scater::runUMAP()
+
+sce$cluster <- scran::buildSNNGraph(altExp(sce, 'gene')) |>
+  igraph::cluster_leiden() |>
+  igraph::membership() |>
+  factor()
+
+altExp(sce, 'gene')$cluster <- sce$cluster
+
+scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = 'sizeFactor')
+scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = 'cluster')
+```
+
+
+# Mutation analysis 
+
+## Mutation discovery
+Next, we get the bulk allele count to see if there is any potential SNP mutation
+in our data.
+
+```{r mutation_discovery}
+mutation_discovery_tb <- FLAMES::find_variants(
+  'filtered_sorted.bam',
+  'subset_GRCh38.fa',
+  system.file("extdata", "filtered.gtf", package = "IgniteRNAseq"),
+  min_nucleotide_depth = 100,
+  homopolymer_window = 3,
+  annotated_region_only = TRUE,
+  names_from = "gene_name",
+  threads = 4
+)
+
+mutation_discovery_tb
+
+mutation_discovery_tb <- mutation_discovery_tb |>
+  filter(freq > 0.2, freq < 0.8) |>
+  arrange(desc(count))
+
+mutation_discovery_tb
+```
+As we can see, there is a couple of potential SNP mutations, let's see if they
+are correlated with our clustering.
+
+## Mutation calling
+`FLAMES` offers the `sc_mutations` function to call mutations at the single-cell
+level:
+```{r mutation_calling}
+snps_tb <- FLAMES::sc_mutations(
+  'filtered_sorted.bam',
+  seqnames = as.character(mutation_discovery_tb$seqnames),
+  positions = mutation_discovery_tb$pos,
+  indel = F,
+  barcodes = colnames(sce),
+  threads = 4
+)
+```
+
+Lets visualize the SNPs on our previous UMAP:
+```{r view_mutations}
+head(snps_tb)
+
+chr19 <- snps_tb |>
+  filter(allele_count > 0, pct > 0.5) |>
+  filter(seqname == 'chr19', pos == 48965830)
+chr19 <- chr19[match(colnames(sce), chr19$barcode),"allele"] |>
+ as.data.frame()
+scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = chr19)
+
+chrM_7028 <- snps_tb |>
+  filter(allele_count > 0, pct > 0.5) |>
+  filter(seqname == 'chrM', pos == 7028)
+chrM_7028 <- chrM_7028[match(colnames(sce), chrM_7028$barcode),"allele"] |>
+ as.data.frame()
+scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = chrM_7028)
+
+chrM_8251 <- snps_tb |>
+  filter(allele_count > 0, pct > 0.5) |>
+  filter(seqname == 'chrM', pos == 8251)
+chrM_8251 <- chrM_8251[match(colnames(sce), chrM_8251$barcode),"allele"] |>
+ as.data.frame()
+scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = chrM_8251)
+
+chrM_9123 <- snps_tb |>
+  filter(allele_count > 0, pct > 0.5) |>
+  filter(seqname == 'chrM', pos == 9123)
+chrM_9123 <- chrM_9123[match(colnames(sce), chrM_9123$barcode),"allele"] |>
+ as.data.frame()
+scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = chrM_9123)
+
+chrM_11719 <- snps_tb |>
+  filter(allele_count > 0, pct > 0.5) |>
+  filter(seqname == 'chrM', pos == 11719)
+chrM_11719 <- chrM_11719[match(colnames(sce), chrM_11719$barcode),"allele"] |>
+ as.data.frame()
+scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = chrM_11719)
+```
+
+# Differential Transcript Experssion analysis
+Since we have the transcript count matrix from `FLAMES`, we can do some DTE
+analysis:
+```{r DTE}
+pseudo_bulk <- counts(sce) |> 
+    t() |>
+    as.matrix() |>
+    by(sce$cluster, colSums) |>
+    sapply(identity) |>
+    by(rownames(counts(sce)), colSums) |>
+    sapply(identity) |>
+    t()
+
+dgelist <- DGEList(
+  counts = pseudo_bulk[, -2],
+  group = factor(c("A", "B", "A", "B"))
+)
+dgelist <- dgelist[
+  filterByExpr(dgelist), , # bias?
+  keep.lib.sizes = FALSE
+]
+plotMDS(dgelist)
+
+dgelist <- calcNormFactors(dgelist, method = "TMM")
+# means model
+design <- model.matrix(~ 0 + dgelist$samples$group, data = dgelist$samples)
+colnames(design) <- gsub(".*\\$", "", colnames(design)) |>
+  gsub(" .*$", "", x = _)
+dge_v <- voom(dgelist, design, save.plot = T, plot = F, span = 0.2)
+efit <- lmFit(dge_v, dge_v$design) |>
+  contrasts.fit(contrasts = makeContrasts(
+    MalevsFemale = "groupA - groupB",
+    levels = dge_v$design
+  )) |>
+  eBayes()
+topTable(efit)
+```
+
+```{r}
+scater::plotReducedDim(altExp(sce[, sce$cluster != 2], 'gene'), 'UMAP', 
+                       colour_by = data.frame(raw_expr = counts(sce)['ENST00000621160.5', sce$cluster != 2]))
+```
+
+# Differential Transcript Usage analysis
+WIP
+```{r}
+sce@metadata$OutputFiles$outdir <- tempdir()
+download.file('https://zenodo.org/records/12751214/files/isoform_FSM_annotation.csv?download=1', 
+              file.path(sce@metadata$OutputFiles$outdir, "isoform_FSM_annotation.csv"))
+
+colLabels(sce) <- sce$cluster
+dtu_df <- sc_DTU_analysis(sce)
+```
+

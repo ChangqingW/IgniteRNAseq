@@ -1,28 +1,31 @@
-Package: BuildABiocWorkshop
-Title: Bioconductor or R Workshop Template and Github Actions
-Version: 2.0.1
+Package: IgniteRNAseq
+Title: Igniting full-length isoform and mutation analysis of single-cell RNA-seq data with FLAMES
+Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Sean",
-           family = "Davis",
-           role = c("aut", "cre"),
-           email = "seandavi@gmail.com",
-           comment = c(ORCID = "0000-0002-8991-6458"))
-Description: This package serves as a template for using github actions to 
-    prepare a Bioconductor Workshop package for use. In particular,
-    a pkgdown website and docker image are generated based on workflow 
-    settings. 
-License: MIT + file LICENSE
+    person("Changqing", "Wang", role=c("aut", "cre"),
+           email="wang.ch@wehi.edu.au",
+           comment = c(ORCID = "0000-0001-7868-3882"))
+Description: R package that supports FLAMES workflow demo.
+License: AGPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
+Imports: 
+    edgeR,
+    FLAMES,
+    ggplot2,
+    igraph,
+    limma,
+    scater,
+    scran,
+    SingleCellExperiment
 Depends: 
     Biobase
 Suggests: 
     knitr,
     rmarkdown,
     pkgdown
-URL: https://seandavi.github.io/BuildABiocWorkshop/
-BugReports: https://github.com/seandavi/BuildABiocWorkshop/issues/new/choose
+URL: https://ChangqingW.github.io/IgniteRNAseq
 VignetteBuilder: knitr
-DockerImage: ghcr.io/seandavi/buildabiocworkshop:latest
+DockerImage: ghcr.io/ChangqingW/IgniteRNAseq:latest

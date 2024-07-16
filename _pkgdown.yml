@@ -1,4 +1,4 @@
-url: https://seandavi.github.io/BuildABiocWorkshop
+url: https://ChangqingW.github.io/IgniteRNAseq
 
 template:
   params:
@@ -13,6 +13,6 @@ home:
 navbar:
   right:
    - icon: fa-github
-     href: https://github.com/seandavi/BuildABiocWorkshop
+     href: https://ChangqingW.github.io/IgniteRNAseq
      
 
