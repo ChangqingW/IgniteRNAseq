@@ -29,7 +29,7 @@ options(width=90)
 ```
 
 ```{r downloads}
-if (!file.exists("~/filtered_sorted.bam") | !file.exists("~/filtered_sorted.bam.bai") {
+if (!file.exists("~/filtered_sorted.bam") | !file.exists("~/filtered_sorted.bam.bai")) {
   options(timeout = max(600, getOption("timeout")))
   download.file("https://zenodo.org/records/12751214/files/filtered_sorted.bam?download=1", "filtered_sorted.bam", mode = 'wb')
   download.file("https://zenodo.org/records/12751214/files/filtered_sorted.bam.bai?download=1", "filtered_sorted.bam.bai", mode = 'wb')
