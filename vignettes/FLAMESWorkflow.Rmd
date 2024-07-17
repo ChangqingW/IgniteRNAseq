@@ -75,7 +75,7 @@ library(limma)
 ```
 
 # `FLAMES` pipeline
-![](FLAMES pipeline - confirmation.png){width=400px}
+![](FLAMES_pipeline.png){width=400px}
 
 ## Read pre-processing
 
