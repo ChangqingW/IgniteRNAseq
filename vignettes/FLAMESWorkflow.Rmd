@@ -16,10 +16,27 @@ In this vignette, we will walk through the `FLAMES` single-cell pipeline, from
 de-multiplexing raw FASTQ files to identifying and quantifying transcripts. We
 then perform analysis including single nucleotide polymorphism (SNP), 
 differential transcript expression analysis and differential transcript usage 
-analysis. We will use the cell line mixture data from Tian *et al.* (2021).
+analysis. We will use the cell line mixture data from Tian *et al.* (2021)
+[@tianComprehensiveCharacterizationSinglecell2021].
 
 # Introduction
-WIP
+While the popular single-cell kits allows profiling the transcriptome of up to
+10,000 cells [@WhatMaximumNumber] at once, the traditional short-read sequencing
+(100-200 nts) limits our ability to unambiguously profile **isoform expression**
+and **mutations**. To overcome this issue, we can combine long-read sequencing 
+with existing single-cell kits.
+
+Though long-read sequencing can provide read lengths several orders of magnitude
+larger than the typical short-read sequencing, it comes at much steeper cost and
+lower throughput, to accommodate this, we profile a smaller sub-sample of cells 
+in our *FLT-seq* protocol[@tianComprehensiveCharacterizationSinglecell2021]:
+![](FLT-seq.png){width=400px}
+
+There are also many other protocols that combine single-cell with long-read
+sequencing, including *scRaCH-seq* which profiles gene panel
+[@pengSinglecellRapidCapture2024], *LR-Split-seq* which uses combinatorial
+barcoding and does not require microfluidic equipments
+[@rebboahMappingModelingGenomic2021].
 
 # Set-up
 
@@ -57,31 +74,106 @@ library(edgeR)
 library(limma)
 ```
 
-# Read pre-processing
+# `FLAMES` pipeline
+![](FLAMES pipeline - confirmation.png){width=400px}
 
-The FASTQ files need to be de-multiplexed first, i.e. identifiying the cell
-barcode:
-```{r barcode1}
+## Read pre-processing
+
+The `FLAMES` pipeline starts with de-multiplexing the FASTQ reads, i.e.
+identifiying the cell barcode. For protocols that use the 10x single-cell kits,
+the raw reads will look like the following, where the 10x adapter sequences and
+polyT tails are highlighted.
+![](viewer_mode.png){width=400px}
+![](10x_3.png){width=400px}
+
+`FLAMES` will locate the cell barcode by locating the adjacent adapter sequences
+, and match the barcode against an allow-list (if it is provided).
+We can specify the above 10x 3' protocol as follows:
+```{r pattern}
+protocol_pattern <- c(
+  primer = "CTACACGACGCTCTTCCGATCT",
+  BC = "NNNNNNNNNNNNNNNN",
+  UMI = "NNNNNNNNNNNN", 
+  polyT = "TTTTTTTTT"
+)
+```
+Note that the order has to be the same as they appear in the protocol. The names
+can be arbitrary for each sequence, but the names **`UMI` and `BC` are required**
+.
+
+Let's try de-multiplexing a couple reads with `FLAMES::find_barcode`:
+```{r barcode}
+outdir <- tempfile()
+dir.create(outdir)
+
+# prepare a barcode allow-list
+bc_allow <- file.path(outdir, "bc_allow.tsv")
+R.utils::gunzip(
+  filename = system.file("extdata/bc_allow.tsv.gz", package = "FLAMES"), 
+  destname = bc_allow, remove = FALSE
+)
+
+find_barcode(
+  # raw fastq file to be de-multiplexed
+  fastq = system.file("extdata/fastq", package = "FLAMES"),
+  # outputs
+  stats_out = file.path(outdir, "bc_stat"),
+  reads_out = file.path(outdir, "demultiplexed.fq"),
+  barcodes_file = bc_allow,
+  pattern = protocol_pattern, # our protocol pattern
+  threads = 1
+)
+```
+
+`FLAMES` will find and trim the specified pattern, save the barcode and UMI to
+the identifier field of the read, let check the first raw read:
+```{r fastq_raw}
 read_lines(system.file("extdata/fastq/musc_rps24.fastq.gz", package = "FLAMES"),
-           n_max = 4)
+           n_max = 2)
 ```
-FLAMES provides the `find_barcode` function to identify and trim the barcodes:
-```{r barcode2}
-example("find_barcode")
-
-read_lines(file.path(outdir, "demultiplexed.fq.gz"), n_max = 2)
+and the first de-multiplexed read:
+```{r fastq_demultiplexed}
+read_lines(file.path(outdir, "demultiplexed.fq"), n_max = 2)
 ```
 
-# Running FLAMES
-```{r}
-# WIP
-# example code for running pipeline
+## Alignment
+Once the reads are processed, they are ready to be aligned to the reference 
+genome. `FLAMES` calls `minimap2` to perform alignment and `samtoools` to sort 
+and index the BAM file, so we need to make sure the binaries are available in 
+`$PATH` for `FLAMES` to find it.
+```{r alignemnt, eval=FALSE}
+if (!any(is.na(sys_which(c("minimap2", "k8"))))) {
+    minimap2_align(
+        config = jsonlite::fromJSON(
+          system.file('extdata/SIRV_config_default.json', package = 'FLAMES')
+        ),
+        fa_file = fa,
+        fq_in = file.path(outdir, "demultiplexed.fq"),
+        annot = system.file("extdata", "filtered.gtf", package = "IgniteRNAseq"),
+        outdir = outdir
+    )
+}
 ```
 
-After running the pipeline, we get a `SingleCellExperiment` object and we can
-finally start some analysis.
+`FLAMES` then performs gene quantification, isoform identification and isoform
+quantification. For the interest of time we will skip running them individually,
+as `FLAMES` also provides the `sc_long_pipeline` wrapper to do all steps.
+
+```{r sc_long_pipeline, eval=FALSE}
+sce <- FLAMES::sc_long_pipeline(
+  genome_fa = fa,
+  fastq = system.file("extdata/fastq/musc_rps24.fastq.gz", package = "FLAMES"),
+  annotation = system.file("extdata/rps24.gtf.gz", package = "FLAMES"),
+  outdir = outdir,
+  barcodes_file = bc_allow,
+  minimap2 = '~/k8-1.2/k8-x86_64-Linux', # apt does not package k8 with minimap2
+)
+```
+
 
 # Data pre-processing 
+After running the pipeline, we get a `SingleCellExperiment` object and we can
+finally start some analysis.
 
 ```{r load_data}
 sce <- qs::qread(system.file("extdata", "sce.qs", package = "IgniteRNAseq"))

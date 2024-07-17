@@ -15,3 +15,5 @@ RUN wget "https://zenodo.org/records/12751214/files/filtered_sorted.bam.bai?down
 RUN wget "https://zenodo.org/records/12751214/files/subset_GRCh38.fa.gz?download=1" -O subset_GRCh38.fa.gz
 
 RUN gunzip subset_GRCh38.fa.gz
+
+RUN sudo apt-get update && sudo apt-get install -y samtools minimap2 && wget -O- https://github.com/attractivechaos/k8/releases/download/v1.2/k8-1.2.tar.bz2 | tar -jx
