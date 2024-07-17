@@ -5,6 +5,7 @@ author:
     affiliation: The Walter and Eliza Hall Institute of Medical Research, 1G Royal Parade, Parkville, VIC 3052, Melbourne, Australia; Department of Medical Biology, The University of Melbourne, Parkville, VIC 3010, Melbourne, Australia
 date: "16 July 2024"
 output: rmarkdown::html_vignette
+bibliography: document.bib
 vignette: >
   %\VignetteIndexEntry{FLAMES Workshop}
   %\VignetteEngine{knitr::rmarkdown}
@@ -30,7 +31,7 @@ Though long-read sequencing can provide read lengths several orders of magnitude
 larger than the typical short-read sequencing, it comes at much steeper cost and
 lower throughput, to accommodate this, we profile a smaller sub-sample of cells 
 in our *FLT-seq* protocol[@tianComprehensiveCharacterizationSinglecell2021]:
-![](FLT-seq.png){width=400px}
+![](FLT-seq.png){width=800px}
 
 There are also many other protocols that combine single-cell with long-read
 sequencing, including *scRaCH-seq* which profiles gene panel
@@ -75,7 +76,7 @@ library(limma)
 ```
 
 # `FLAMES` pipeline
-![](FLAMES_pipeline.png){width=400px}
+![](FLAMES_pipeline.png){width=800px}
 
 ## Read pre-processing
 
@@ -83,8 +84,8 @@ The `FLAMES` pipeline starts with de-multiplexing the FASTQ reads, i.e.
 identifiying the cell barcode. For protocols that use the 10x single-cell kits,
 the raw reads will look like the following, where the 10x adapter sequences and
 polyT tails are highlighted.
-![](viewer_mode.png){width=400px}
-![](10x_3.png){width=400px}
+![](viewer_mode.png){width=800px}
+![](10x_3.png){width=800px}
 
 `FLAMES` will locate the cell barcode by locating the adjacent adapter sequences
 , and match the barcode against an allow-list (if it is provided).
