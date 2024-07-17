@@ -7,7 +7,7 @@ date: "16 July 2024"
 output: rmarkdown::html_vignette
 bibliography: document.bib
 vignette: >
-  %\VignetteIndexEntry{FLAMES Workshop}
+  %\VignetteIndexEntry{FLAMES_Workshop}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
