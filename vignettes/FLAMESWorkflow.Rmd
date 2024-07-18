@@ -6,8 +6,10 @@ author:
 date: "16 July 2024"
 output: rmarkdown::html_vignette
 bibliography: document.bib
+csl: bioinformatics.csl
+link-citations: true
 vignette: >
-  %\VignetteIndexEntry{FLAMESWorkshop}
+  %\VignetteIndexEntry{FLAMESWorkflow}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,7 +19,7 @@ In this vignette, we will walk through the `FLAMES` single-cell pipeline, from
 de-multiplexing raw FASTQ files to identifying and quantifying transcripts. We
 then perform analysis including single nucleotide polymorphism (SNP), 
 differential transcript expression analysis and differential transcript usage 
-analysis. We will use the cell line mixture data from Tian *et al.* (2021)
+analysis. We will use the cell line mixture data from Tian *et al.*
 [@tianComprehensiveCharacterizationSinglecell2021].
 
 # Introduction
@@ -46,7 +48,7 @@ options(digits=3)
 options(width=90)
 ```
 
-```{r downloads}
+```{r downloads, message=FALSE}
 if (!file.exists("~/filtered_sorted.bam") | !file.exists("~/filtered_sorted.bam.bai")) {
   options(timeout = max(600, getOption("timeout")))
   download.file("https://zenodo.org/records/12751214/files/filtered_sorted.bam?download=1", "filtered_sorted.bam", mode = 'wb')
@@ -62,6 +64,16 @@ if (!file.exists("~/subset_GRCh38.fa")) {
   fa <- "subset_GRCh38.fa"
 } else {
   fa <- "~/subset_GRCh38.fa"
+}
+
+if (!file.exists("~/sce_lib10")) {
+  download.file("https://zenodo.org/records/12770737/files/sce_lib10.qs?download=1")
+  download.file("https://zenodo.org/records/12770737/files/sce_lib90.qs?download=1")
+  sce_lib10 <- qs::qread("sce_lib10.qs")
+  sce_lib90 <- qs::qread("sce_lib90.qs")
+} else {
+  sce_lib10 <- qs::qread("~/sce_lib10.qs")
+  sce_lib90 <- qs::qread("~/sce_lib90.qs")
 }
 ```
 
@@ -257,7 +269,11 @@ snps_tb <- FLAMES::sc_mutations(
 )
 ```
 
-Lets visualize the SNP status of each cell on the long-read derived UMAP:
+Lets visualize the SNP status of each cell on the long-read derived UMAP. We
+will color the cell by the allele that is supported by more than half of the 
+reads from that cell. This can be done easily with some tidyverse functions. 
+The cell lines are homozygous, but with e.g. cancer data this could require more
+considerations.
 ```{r view_mutations}
 head(snps_tb)
 
@@ -299,8 +315,13 @@ scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = chrM_11719)
 
 # Differential Transcript Experssion analysis
 Since we have the transcript count matrix from `FLAMES`, we can do some DTE
-analysis:
-```{r DTE}
+analysis. Let's pretend that instead of cell lines, we have two replicate samples,
+and we devide the cells in each sample by a SNP mutation status. We can use
+`limma` to find differentially transcribed genes in the mutated vs reference cells.
+
+First we need to aggregate the counts to pseudo-bulk samples:
+```{r MDS}
+# aggregate to pseudo-bulk counts
 pseudo_bulk <- counts(sce) |> 
     t() |>
     as.matrix() |>
@@ -311,15 +332,25 @@ pseudo_bulk <- counts(sce) |>
     t()
 
 dgelist <- DGEList(
+  # throw out one cell line to make this 2 vs 2
   counts = pseudo_bulk[, -2],
-  group = factor(c("A", "B", "A", "B"))
+  group = factor(c("mutated", "reference", "mutated", "reference"))
 )
+
+# remove lowly expressed isoforms
 dgelist <- dgelist[
-  filterByExpr(dgelist), , # bias?
+  filterByExpr(dgelist), , 
   keep.lib.sizes = FALSE
 ]
-plotMDS(dgelist)
 
+# visualize the pseudo-bulk samples
+plotMDS(dgelist)
+```
+Looks like there is some within-group variation as well as
+between-group variation. Let's use `limma` to find significantly
+differentiated expressed transcripts between the mutated and reference cells.
+
+```{r DTE}
 dgelist <- calcNormFactors(dgelist, method = "TMM")
 # means model
 design <- model.matrix(~ 0 + dgelist$samples$group, data = dgelist$samples)
@@ -328,21 +359,35 @@ colnames(design) <- gsub(".*\\$", "", colnames(design)) |>
 dge_v <- voom(dgelist, design, save.plot = T, plot = F, span = 0.2)
 efit <- lmFit(dge_v, dge_v$design) |>
   contrasts.fit(contrasts = makeContrasts(
-    MalevsFemale = "groupA - groupB",
+    MalevsFemale = "groupmutated - groupreference",
     levels = dge_v$design
   )) |>
   eBayes()
 topTable(efit)
 ```
 
+Let's visualise the top differentially expressed transcript on the UMAP:
 ```{r}
 scater::plotReducedDim(altExp(sce[, sce$cluster != 2], 'gene'), 'UMAP', 
-                       colour_by = data.frame(raw_expr = counts(sce)['ENST00000621160.5', sce$cluster != 2]))
+  colour_by = data.frame(exp = counts(sce)['ENST00000621160.5', sce$cluster != 2]),
+  shape_by =  "cluster"
+)
 ```
 
 # Differential Transcript Usage analysis
-WIP
-```{r}
+Previously we have identified the transcripts that are differentially expressed (
+i.e. DTE), another question we can ask is whether there are differentiall
+transcript usage (DTU) between the mutated and reference cells. The difference
+between DTU and DTE is illustrated by the following figure, adapted from
+[@ntranosDiscriminativeLearningApproach2019].
+![](DTU_DTE.png){width=800px}
+
+The `sc_DTU_analysis` function can test for DTU (chi-squre test against uniform
+distribution). It will ignore the transcription start site and end site differences
+and only consider splicing differences.
+```{r DTU1, message=FALSE, warning=FALSE}
+# The splice sites are saved in isoform_FSM_annotation.csv during
+# isoform identification. Let's make sure it is available:
 sce@metadata$OutputFiles$outdir <- tempdir()
 download.file('https://zenodo.org/records/12751214/files/isoform_FSM_annotation.csv?download=1', 
               file.path(sce@metadata$OutputFiles$outdir, "isoform_FSM_annotation.csv"))
@@ -351,3 +396,23 @@ colLabels(sce) <- sce$cluster
 dtu_df <- sc_DTU_analysis(sce)
 ```
 
+We will get a data frame with the chi-square test results:
+```{r DTU2}
+head(dtu_df)
+```
+
+## Visualizations for DTU
+Unlike DTE, DTU is a bit harder to visiuliaze. For experiments similar
+to `FLT-seq`, where matching short-reads are available for both the
+smaller sub-sample and the larger sub-sample, we provide some additional
+plotting functions:
+
+```{r sc_umap}
+multiAssay <- combine_sce(
+  sce_lib90,
+  sce_lib10,
+  sce
+)
+rowData(sce)[rowData(sce)$transcript_id =='ENST00000391751.7', ]
+sc_umap_expression("ENSG00000170889.14", multiAssay)
+```

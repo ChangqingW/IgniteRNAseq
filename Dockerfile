@@ -16,4 +16,8 @@ RUN wget "https://zenodo.org/records/12751214/files/subset_GRCh38.fa.gz?download
 
 RUN gunzip subset_GRCh38.fa.gz
 
+RUN wget "https://zenodo.org/records/12770737/files/sce_lib10.qs?download=1" -O sce_lib10.qs 
+
+RUN wget "https://zenodo.org/records/12770737/files/sce_lib90.qs?download=1" -O sce_lib90.qs
+
 RUN sudo apt-get update && sudo apt-get install -y samtools minimap2 && wget -O- https://github.com/attractivechaos/k8/releases/download/v1.2/k8-1.2.tar.bz2 | tar -jx

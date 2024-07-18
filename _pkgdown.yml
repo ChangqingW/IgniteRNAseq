@@ -20,7 +20,7 @@ navbar:
       text: Vignettes
       menu:
         - text: FLAMES package demo
-          href: articles/FLAMESWorkshop.html
+          href: articles/FLAMESWorkflow.html
       icon:
       href:
 
