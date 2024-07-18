@@ -346,6 +346,7 @@ dgelist <- dgelist[
 # visualize the pseudo-bulk samples
 plotMDS(dgelist)
 ```
+
 Looks like there is some within-group variation as well as
 between-group variation. Let's use `limma` to find significantly
 differentiated expressed transcripts between the mutated and reference cells.
@@ -385,7 +386,7 @@ between DTU and DTE is illustrated by the following figure, adapted from
 The `sc_DTU_analysis` function can test for DTU (chi-squre test against uniform
 distribution). It will ignore the transcription start site and end site differences
 and only consider splicing differences.
-```{r DTU1, message=FALSE, warning=FALSE}
+```{r DTU1, message=FALSE, warning=FALSE, echo=FALSE}
 # The splice sites are saved in isoform_FSM_annotation.csv during
 # isoform identification. Let's make sure it is available:
 sce@metadata$OutputFiles$outdir <- tempdir()
@@ -416,3 +417,9 @@ multiAssay <- combine_sce(
 rowData(sce)[rowData(sce)$transcript_id =='ENST00000391751.7', ]
 sc_umap_expression("ENSG00000170889.14", multiAssay)
 ```
+
+```{r softwareinfo}
+sessionInfo()
+```
+
+# References
