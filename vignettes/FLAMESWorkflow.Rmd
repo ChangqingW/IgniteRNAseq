@@ -67,8 +67,8 @@ if (!file.exists("~/subset_GRCh38.fa")) {
 }
 
 if (!file.exists("~/sce_lib10")) {
-  download.file("https://zenodo.org/records/12770737/files/sce_lib10.qs?download=1")
-  download.file("https://zenodo.org/records/12770737/files/sce_lib90.qs?download=1")
+  download.file("https://zenodo.org/records/12770737/files/sce_lib10.qs?download=1", "sce_lib10.qs", mode = 'wb')
+  download.file("https://zenodo.org/records/12770737/files/sce_lib90.qs?download=1", "sce_lib90.qs", mode = 'wb')
   sce_lib10 <- qs::qread("sce_lib10.qs")
   sce_lib90 <- qs::qread("sce_lib90.qs")
 } else {
