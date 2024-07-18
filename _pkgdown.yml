@@ -17,7 +17,3 @@ navbar:
     menu:
     - text: FLAMES package demo
       href: articles/FLAMES_Workshop.html
-  right:
-   - icon: fa-github
-     href: https://ChangqingW.github.io/IgniteRNAseq
-     
