@@ -7,7 +7,7 @@ date: "16 July 2024"
 output: rmarkdown::html_vignette
 bibliography: document.bib
 vignette: >
-  %\VignetteIndexEntry{FLAMES_Workshop}
+  %\VignetteIndexEntry{FLAMESWorkshop}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -58,7 +58,7 @@ if (!file.exists("~/filtered_sorted.bam") | !file.exists("~/filtered_sorted.bam.
 
 if (!file.exists("~/subset_GRCh38.fa")) {
   download.file("https://zenodo.org/records/12751214/files/subset_GRCh38.fa.gz?download=1", "subset_GRCh38.fa.gz", mode = 'wb')
-  R.utils::gunzip("subset_GRCh38.fa.gz", destname = "subset_GRCh38.fa", remove = FALSE)
+  R.utils::gunzip("subset_GRCh38.fa.gz", destname = "subset_GRCh38.fa", remove = FALSE, skip = TRUE)
   fa <- "subset_GRCh38.fa"
 } else {
   fa <- "~/subset_GRCh38.fa"
@@ -84,7 +84,7 @@ The `FLAMES` pipeline starts with de-multiplexing the FASTQ reads, i.e.
 identifiying the cell barcode. For protocols that use the 10x single-cell kits,
 the raw reads will look like the following, where the 10x adapter sequences and
 polyT tails are highlighted.
-![](viewer_mode.png){width=800px}
+![](viewer_mode.png){width=800px}  
 ![](10x_3.png){width=800px}
 
 `FLAMES` will locate the cell barcode by locating the adjacent adapter sequences
@@ -171,7 +171,6 @@ sce <- FLAMES::sc_long_pipeline(
 )
 ```
 
-
 # Data pre-processing 
 After running the pipeline, we get a `SingleCellExperiment` object and we can
 finally start some analysis.
@@ -201,12 +200,16 @@ scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = 'sizeFactor')
 scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = 'cluster')
 ```
 
+We can clearly see the five cell lines are identified by the clustering using
+the gene counts (quantified from the long-reads). Now let's see if we can get
+mutations / isoforms specific to each cell line.
 
 # Mutation analysis 
 
 ## Mutation discovery
-Next, we get the bulk allele count to see if there is any potential SNP mutation
-in our data.
+Let's suppose we no nothing about the mutations in our cell lines, we can use
+the `FLAMES::find_variants` function get bulk mutation count (similar to the
+`samtools mpileup` command, but in a tibble format with extra information):
 
 ```{r mutation_discovery}
 mutation_discovery_tb <- FLAMES::find_variants(
@@ -221,7 +224,12 @@ mutation_discovery_tb <- FLAMES::find_variants(
 )
 
 mutation_discovery_tb
+```
+Since this is Nanopore sequencing, there ones with very low alternative allele
+frequency are likely to be sequencing errors; Nanopore is also known to have
+higher error rate in homopolymer regions, so we can filter out those as well:
 
+```{r mutation_discovery_filter}
 mutation_discovery_tb <- mutation_discovery_tb |>
   filter(freq > 0.2, freq < 0.8) |>
   arrange(desc(count))
@@ -232,6 +240,10 @@ As we can see, there is a couple of potential SNP mutations, let's see if they
 are correlated with our clustering.
 
 ## Mutation calling
+The previous `find_variants` function is for bulk mutation calling, but since
+we have **single-cell long-reads**, we can call mutations at the single-cell
+level, and associate them with transcription profiles.
+
 `FLAMES` offers the `sc_mutations` function to call mutations at the single-cell
 level:
 ```{r mutation_calling}
@@ -245,7 +257,7 @@ snps_tb <- FLAMES::sc_mutations(
 )
 ```
 
-Lets visualize the SNPs on our previous UMAP:
+Lets visualize the SNP status of each cell on the long-read derived UMAP:
 ```{r view_mutations}
 head(snps_tb)
 

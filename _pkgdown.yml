@@ -11,9 +11,26 @@ home:
 
 
 navbar:
- components:
-   articles:
-    text: Articles
-    menu:
-    - text: FLAMES package demo
-      href: articles/FLAMES_Workshop.html
+  structure:
+    left: [vignettes]
+    right: [github, bioc]
+
+  components:
+    vignettes:
+      text: Vignettes
+      menu:
+        - text: FLAMES package demo
+          href: articles/FLAMESWorkshop.html
+      icon:
+      href:
+
+    github:
+      text:
+      menu:
+      icon: fa-github
+      href: https://github.com/ChangqingW/IgniteRNAseq
+    bioc:
+      text:
+      menu:
+      icon: fa-book
+      href: https://bioconductor.org/packages/FLAMES
