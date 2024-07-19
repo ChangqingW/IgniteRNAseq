@@ -109,7 +109,7 @@ barcoding and does not require microfluidic equipments <span class="citation">(<
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"https://zenodo.org/records/12751214/files/filtered_sorted.bam.bai?download=1"</span>, <span class="st">"filtered_sorted.bam.bai"</span>, mode <span class="op">=</span> <span class="st">'wb'</span><span class="op">)</span></span>
 <span>  <span class="va">bam</span> <span class="op">&lt;-</span> <span class="st">"filtered_sorted.bam"</span></span>
 <span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>  <span class="va">bam</span> <span class="op">&lt;-</span> <span class="st">"~/filtered_sorted.bam"</span></span>
+<span>  <span class="va">bam</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/path.expand.html" class="external-link">path.expand</a></span><span class="op">(</span><span class="st">"~/filtered_sorted.bam"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="st">"~/subset_GRCh38.fa"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -117,7 +117,7 @@ barcoding and does not require microfluidic equipments <span class="citation">(<
 <span>  <span class="fu">R.utils</span><span class="fu">::</span><span class="fu"><a href="https://henrikbengtsson.github.io/R.utils/reference/compressFile.html" class="external-link">gunzip</a></span><span class="op">(</span><span class="st">"subset_GRCh38.fa.gz"</span>, destname <span class="op">=</span> <span class="st">"subset_GRCh38.fa"</span>, remove <span class="op">=</span> <span class="cn">FALSE</span>, skip <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="va">fa</span> <span class="op">&lt;-</span> <span class="st">"subset_GRCh38.fa"</span></span>
 <span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>  <span class="va">fa</span> <span class="op">&lt;-</span> <span class="st">"~/subset_GRCh38.fa"</span></span>
+<span>  <span class="va">fa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/path.expand.html" class="external-link">path.expand</a></span><span class="op">(</span><span class="st">"~/subset_GRCh38.fa"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="st">"~/sce_lib10.qs"</span><span class="op">)</span> <span class="op">|</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="st">"~/sce_lib90.qs"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -149,7 +149,7 @@ barcoding and does not require microfluidic equipments <span class="citation">(<
 <p>The <code>FLAMES</code> pipeline starts with de-multiplexing the
 FASTQ reads, i.e. identifiying the cell barcode. For protocols that use
 the 10x single-cell kits, the raw reads will look like the following,
-where the 10x adapter sequences and polyT tails are highlighted. <img src="viewer_mode.png" width="800"><br><img src="10x_3.png" width="800"></p>
+where the 10x adapter sequences and polyT tails are highlighted. <img src="viewer_mode.png" width="800" alt="Screenshot from SeqSizzle"><br><img src="10x_3.png" width="800" alt="Chromium Single Cell 3’ Reagent Kits User Guide"></p>
 <p><code>FLAMES</code> will locate the cell barcode by locating the
 adjacent adapter sequences , and match the barcode against an allow-list
 (if it is provided). We can specify the above 10x 3’ protocol as
@@ -197,7 +197,7 @@ protocol. The names can be arbitrary for each sequence, but the names
 <span><span class="co">## BC: NNNNNNNNNNNNNNNN</span></span>
 <span><span class="co">## UMI: NNNNNNNNNNNN</span></span>
 <span><span class="co">## polyT: TTTTTTTTT</span></span>
-<span><span class="co">## Setting known barcodes from /tmp/RtmpXRkGHQ/file58143d51569/bc_allow.tsv</span></span>
+<span><span class="co">## Setting known barcodes from /tmp/Rtmpn0L6RO/file58227a74a73/bc_allow.tsv</span></span>
 <span><span class="co">## Number of known barcodes: 143</span></span>
 <span><span class="co">## Searching for barcodes...</span></span>
 <span><span class="co">## Number of reads processed: 393</span></span>
@@ -272,7 +272,7 @@ slot. Let’s run the pipeline with a small number of reads:</p>
 <span>  annotation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/rps24.gtf.gz"</span>, package <span class="op">=</span> <span class="st">"FLAMES"</span><span class="op">)</span>,</span>
 <span>  outdir <span class="op">=</span> <span class="va">outdir</span>,</span>
 <span>  barcodes_file <span class="op">=</span> <span class="va">bc_allow</span>,</span>
-<span>  k8 <span class="op">=</span> <span class="st">'~/k8'</span>, <span class="co"># apt does not package k8 with minimap2</span></span>
+<span>  k8 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/path.expand.html" class="external-link">path.expand</a></span><span class="op">(</span><span class="st">'~/k8'</span><span class="op">)</span> <span class="co"># apt does not package k8 with minimap2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -363,11 +363,11 @@ but in a tibble format with extra information):</p>
 <span>  names_from <span class="op">=</span> <span class="st">"gene_name"</span>,</span>
 <span>  threads <span class="op">=</span> <span class="fl">4</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 05:52:40 Reading reference ...</span></span></code></pre>
-<pre><code><span><span class="co">## 05:52:40 Reading annotation ...</span></span></code></pre>
-<pre><code><span><span class="co">## 05:52:40 Got 1 bam file, parallelizing over each region ...</span></span></code></pre>
-<pre><code><span><span class="co">## 05:53:28 Merging results ...</span></span></code></pre>
-<pre><code><span><span class="co">## 05:53:28 Calculating homopolymer percentages ...</span></span></code></pre>
+<pre><code><span><span class="co">## 09:07:02 Reading reference ...</span></span></code></pre>
+<pre><code><span><span class="co">## 09:07:02 Reading annotation ...</span></span></code></pre>
+<pre><code><span><span class="co">## 09:07:02 Got 1 bam file, parallelizing over each region ...</span></span></code></pre>
+<pre><code><span><span class="co">## 09:07:49 Merging results ...</span></span></code></pre>
+<pre><code><span><span class="co">## 09:07:49 Calculating homopolymer percentages ...</span></span></code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mutation_discovery_tb</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,088 × 10</span></span></span>
@@ -424,8 +424,8 @@ call mutations at the single-cell level:</p>
 <span>  barcodes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span>,</span>
 <span>  threads <span class="op">=</span> <span class="fl">4</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 05:54:03 Got 1 bam file, parallelizing over each position ...</span></span></code></pre>
-<pre><code><span><span class="co">## 05:54:55 Merging results ...</span></span></code></pre>
+<pre><code><span><span class="co">## 09:08:23 Got 1 bam file, parallelizing over each position ...</span></span></code></pre>
+<pre><code><span><span class="co">## 09:09:13 Merging results ...</span></span></code></pre>
 <p>Lets visualize the SNP status of each cell on the long-read derived
 UMAP. We will color the cell by the allele that is supported by more
 than half of the reads from that cell. This can be done easily with some
