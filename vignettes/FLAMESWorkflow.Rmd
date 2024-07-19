@@ -2,7 +2,7 @@
 title: "Igniting full-length isoform and mutation analysis of single-cell RNA-seq data with FLAMES"
 author:
   - name: Changqing Wang
-    affiliation: The Walter and Eliza Hall Institute of Medical Research, 1G Royal Parade, Parkville, VIC 3052, Melbourne, Australia; Department of Medical Biology, The University of Melbourne, Parkville, VIC 3010, Melbourne, Australia
+    affiliation: The Walter and Eliza Hall Institute of Medical Research
 date: "16 July 2024"
 output: 
   rmarkdown::html_vignette:
@@ -152,9 +152,32 @@ and the first de-multiplexed read:
 read_lines(file.path(outdir, "demultiplexed.fq"), n_max = 2)
 ```
 
+This was done with an Rcpp version of *flexiplex* 
+[@chengFlexiplexVersatileDemultiplexer2024], and is equivalent to calling
+using the native `flexiplex` command line tool with the following arguments:
+
+```{bash flexiplex, eval=FALSE}
+ ~/flexiplex/flexiplex -x CTACACGACGCTCTTCCGATCT \
+  -b '????????????????' -u '????????????' -x TTTTTTTTT \
+  -e 2 -f 8 -k bc_allow.tsv musc_rps24.fastq > main_out.fq
+```
+
+If cell barcodes are not known in advance, e.g. when there is no coupled
+short-reads, the `BLAZE` tool [@youIdentificationCellBarcodes2023] can
+be used to identify the cell barcodes and UMI sequences , and `FLAMES`
+also provides a wrapper `FLAMES::blaze` to call `BLAZE`.
+
+```{r blaze, eval=FALSE}
+blaze(
+  100,
+  fq_in = system.file("extdata/fastq/musc_rps24.fastq.gz", package = "FLAMES")
+)
+```
+
 ## Alignment
 Once the reads are processed, they are ready to be aligned to the reference 
-genome. `FLAMES` calls `minimap2` to perform alignment and `samtoools` to sort 
+genome. `FLAMES` calls `minimap2` [@liMinimap2PairwiseAlignment2018] to
+perform alignment and `samtoools` [@liSequenceAlignmentMap2009] to sort 
 and index the BAM file, so we need to make sure the binaries are available in 
 `$PATH` for `FLAMES` to find it.
 ```{r alignemnt, eval=FALSE}
@@ -173,7 +196,10 @@ if (!any(is.na(sys_which(c("minimap2", "k8"))))) {
 
 `FLAMES` then performs gene quantification, isoform identification and isoform
 quantification. For the interest of time we will skip running them individually,
-as `FLAMES` also provides the `sc_long_pipeline` wrapper to do all steps.
+as `FLAMES` also provides the `sc_long_pipeline` wrapper to do all steps. It will
+return a `SingleCellExperiment` object with the isoform counts, and the isoform
+annotations stored in the `rowRanges` slot. Let's run the pipeline with a small
+number of reads:
 
 ```{r sc_long_pipeline, eval=FALSE}
 sce <- FLAMES::sc_long_pipeline(
@@ -188,7 +214,8 @@ sce <- FLAMES::sc_long_pipeline(
 
 # Data pre-processing 
 After running the pipeline, we get a `SingleCellExperiment` object and we can
-finally start some analysis.
+finally start some analysis. Let's load the `SingleCellExperiment` object from
+our previous cell line mixture data [@tianComprehensiveCharacterizationSinglecell2021].
 
 ```{r load_data}
 sce <- qs::qread(system.file("extdata", "sce.qs", package = "IgniteRNAseq"))
@@ -196,8 +223,10 @@ sce
 altExp(sce, 'gene')
 ```
 
-We can use Bioconductor packages for normalization, dimensionality reduction and
-clustering:
+I have also attached the gene count matrix from long-reads to the `altExp` slot.
+Let's do clustering with the gene counts, using Bioconductor packages for
+normalization, dimensionality reduction and clustering:
+
 ```{r sce_preprocessing}
 altExp(sce, 'gene') <- altExp(sce, 'gene') |>
   scuttle::logNormCounts() |>
@@ -216,8 +245,8 @@ scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = 'cluster')
 ```
 
 We can clearly see the five cell lines are identified by the clustering using
-the gene counts (quantified from the long-reads). Now let's see if we can get
-mutations / isoforms specific to each cell line.
+the gene counts from the long-reads. Now let's see if we can get mutations / 
+isoforms specific to each cell line.
 
 # Mutation analysis 
 
@@ -240,6 +269,7 @@ mutation_discovery_tb <- FLAMES::find_variants(
 
 mutation_discovery_tb
 ```
+
 Since this is Nanopore sequencing, there ones with very low alternative allele
 frequency are likely to be sequencing errors; Nanopore is also known to have
 higher error rate in homopolymer regions, so we can filter out those as well:
@@ -251,6 +281,7 @@ mutation_discovery_tb <- mutation_discovery_tb |>
 
 mutation_discovery_tb
 ```
+
 As we can see, there is a couple of potential SNP mutations, let's see if they
 are correlated with our clustering.
 
@@ -277,6 +308,7 @@ will color the cell by the allele that is supported by more than half of the
 reads from that cell. This can be done easily with some tidyverse functions. 
 The cell lines are homozygous, but with e.g. cancer data this could require more
 considerations.
+
 ```{r view_mutations}
 head(snps_tb)
 
