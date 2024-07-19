@@ -197,7 +197,7 @@ protocol. The names can be arbitrary for each sequence, but the names
 <span><span class="co">## BC: NNNNNNNNNNNNNNNN</span></span>
 <span><span class="co">## UMI: NNNNNNNNNNNN</span></span>
 <span><span class="co">## polyT: TTTTTTTTT</span></span>
-<span><span class="co">## Setting known barcodes from /tmp/RtmpNQTPcg/file9242d929a6a/bc_allow.tsv</span></span>
+<span><span class="co">## Setting known barcodes from /tmp/RtmpZWpbFU/file58162f78ee8/bc_allow.tsv</span></span>
 <span><span class="co">## Number of known barcodes: 143</span></span>
 <span><span class="co">## Searching for barcodes...</span></span>
 <span><span class="co">## Number of reads processed: 393</span></span>
@@ -363,11 +363,11 @@ but in a tibble format with extra information):</p>
 <span>  names_from <span class="op">=</span> <span class="st">"gene_name"</span>,</span>
 <span>  threads <span class="op">=</span> <span class="fl">4</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 04:31:24 Reading reference ...</span></span></code></pre>
-<pre><code><span><span class="co">## 04:31:24 Reading annotation ...</span></span></code></pre>
-<pre><code><span><span class="co">## 04:31:24 Got 1 bam file, parallelizing over each region ...</span></span></code></pre>
-<pre><code><span><span class="co">## 04:32:10 Merging results ...</span></span></code></pre>
-<pre><code><span><span class="co">## 04:32:10 Calculating homopolymer percentages ...</span></span></code></pre>
+<pre><code><span><span class="co">## 05:05:21 Reading reference ...</span></span></code></pre>
+<pre><code><span><span class="co">## 05:05:21 Reading annotation ...</span></span></code></pre>
+<pre><code><span><span class="co">## 05:05:21 Got 1 bam file, parallelizing over each region ...</span></span></code></pre>
+<pre><code><span><span class="co">## 05:06:14 Merging results ...</span></span></code></pre>
+<pre><code><span><span class="co">## 05:06:14 Calculating homopolymer percentages ...</span></span></code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mutation_discovery_tb</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,088 × 10</span></span></span>
@@ -424,8 +424,8 @@ call mutations at the single-cell level:</p>
 <span>  barcodes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span>,</span>
 <span>  threads <span class="op">=</span> <span class="fl">4</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 04:32:45 Got 1 bam file, parallelizing over each position ...</span></span></code></pre>
-<pre><code><span><span class="co">## 04:33:35 Merging results ...</span></span></code></pre>
+<pre><code><span><span class="co">## 05:06:49 Got 1 bam file, parallelizing over each position ...</span></span></code></pre>
+<pre><code><span><span class="co">## 05:07:44 Merging results ...</span></span></code></pre>
 <p>Lets visualize the SNP status of each cell on the long-read derived
 UMAP. We will color the cell by the allele that is supported by more
 than half of the reads from that cell. This can be done easily with some
