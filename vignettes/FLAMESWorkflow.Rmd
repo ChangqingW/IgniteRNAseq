@@ -7,7 +7,6 @@ date: "16 July 2024"
 output: 
   rmarkdown::html_vignette:
     toc: true
-    toc_float: true
 bibliography: document.bib
 csl: bioinformatics.csl
 link-citations: true

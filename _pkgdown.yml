@@ -1,9 +1,8 @@
 url: https://ChangqingW.github.io/IgniteRNAseq
 
 template:
-  params:
-    bootswatch: flatly
-    #ganalytics: UA-99999999-9
+  bootstrap: 5
+  bootswatch: flatly
 
 home:
   title: "FLAMES package demo"
