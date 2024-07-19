@@ -24,4 +24,8 @@ RUN sudo apt-get update && sudo apt-get install -y samtools minimap2 && wget -O-
 
 RUN sudo ln -s /home/rstudio/k8-1.2/k8-x86_64-Linux /bin/k8 && sudo ln -s /home/rstudio/k8-1.2/k8-x86_64-Linux /home/rstudio/k8
 
+USER rstudio
+
 RUN Rscript -e "basilisk::basiliskRun(env = FLAMES:::flames_env, fun = function(){})"
+
+USER root
