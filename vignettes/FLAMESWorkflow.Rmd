@@ -7,6 +7,7 @@ date: "16 July 2024"
 output: 
   rmarkdown::html_vignette:
     toc: true
+    fig_caption: true
 bibliography: document.bib
 csl: bioinformatics.csl
 link-citations: true
@@ -57,7 +58,7 @@ if (!file.exists("~/filtered_sorted.bam") | !file.exists("~/filtered_sorted.bam.
   download.file("https://zenodo.org/records/12751214/files/filtered_sorted.bam.bai?download=1", "filtered_sorted.bam.bai", mode = 'wb')
   bam <- "filtered_sorted.bam"
 } else {
-  bam <- "~/filtered_sorted.bam"
+  bam <- path.expand("~/filtered_sorted.bam")
 }
 
 if (!file.exists("~/subset_GRCh38.fa")) {
@@ -65,7 +66,7 @@ if (!file.exists("~/subset_GRCh38.fa")) {
   R.utils::gunzip("subset_GRCh38.fa.gz", destname = "subset_GRCh38.fa", remove = FALSE, skip = TRUE)
   fa <- "subset_GRCh38.fa"
 } else {
-  fa <- "~/subset_GRCh38.fa"
+  fa <- path.expand("~/subset_GRCh38.fa")
 }
 
 if (!file.exists("~/sce_lib10.qs") | !file.exists("~/sce_lib90.qs")) {
@@ -98,8 +99,8 @@ The `FLAMES` pipeline starts with de-multiplexing the FASTQ reads, i.e.
 identifiying the cell barcode. For protocols that use the 10x single-cell kits,
 the raw reads will look like the following, where the 10x adapter sequences and
 polyT tails are highlighted.
-![](viewer_mode.png){width=800px}  
-![](10x_3.png){width=800px}
+![Screenshot from [SeqSizzle](https://github.com/ChangqingW/SeqSizzle)](viewer_mode.png){width=800px}  
+![Chromium Single Cell 3' Reagent Kits User Guide](10x_3.png){width=800px}
 
 `FLAMES` will locate the cell barcode by locating the adjacent adapter sequences
 , and match the barcode against an allow-list (if it is provided).
@@ -207,7 +208,7 @@ sce <- FLAMES::sc_long_pipeline(
   annotation = system.file("extdata/rps24.gtf.gz", package = "FLAMES"),
   outdir = outdir,
   barcodes_file = bc_allow,
-  k8 = '~/k8', # apt does not package k8 with minimap2
+  k8 = path.expand('~/k8') # apt does not package k8 with minimap2
 )
 ```
 
