@@ -4,92 +4,63 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Igniting full-length isoform and mutation analysis of single-cell RNA-seq data with FLAMES • IgniteRNAseq</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Igniting full-length isoform and mutation analysis of single-cell RNA-seq data with FLAMES">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Igniting full-length isoform and mutation analysis of single-cell RNA-seq data with FLAMES">
 </head>
-<body data-spy="scroll" data-target="#toc">
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">IgniteRNAseq</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
-      </span>
-    </div>
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Vignettes
+    <a class="navbar-brand me-2" href="../index.html">IgniteRNAseq</a>
 
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/FLAMESWorkflow.html">FLAMES package demo</a>
-    </li>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="active nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes">
+<li><a class="dropdown-item" href="../articles/FLAMESWorkflow.html">FLAMES package demo</a></li>
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/ChangqingW/IgniteRNAseq" class="external-link">
-    <span class="fa fa-github"></span>
-
-  </a>
-</li>
-<li>
-  <a href="https://bioconductor.org/packages/FLAMES" class="external-link">
-    <span class="fa fa-book"></span>
-
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ChangqingW/IgniteRNAseq"><span class="fa fa-github"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://bioconductor.org/packages/FLAMES"><span class="fa fa-book"></span></a></li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
 
 
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Igniting full-length isoform and mutation
-analysis of single-cell RNA-seq data with FLAMES</h1>
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+
+      <h1>Igniting full-length isoform and mutation analysis of single-cell RNA-seq data with FLAMES</h1>
                         <h4 data-toc-skip class="author">Changqing
 Wang</h4>
             <address class="author_afil">
-      The Walter and Eliza Hall Institute of Medical Research, 1G Royal
-Parade, Parkville, VIC 3052, Melbourne, Australia; Department of Medical
-Biology, The University of Melbourne, Parkville, VIC 3010, Melbourne,
-Australia<br><h4 data-toc-skip class="date">16 July 2024</h4>
+      The Walter and Eliza Hall Institute of Medical
+Research<br><h4 data-toc-skip class="date">16 July 2024</h4>
       
 
-      <div class="hidden name"><code>FLAMESWorkflow.Rmd</code></div>
-
+      <div class="d-none name"><code>FLAMESWorkflow.Rmd</code></div>
     </address>
 </div>
 
@@ -149,7 +120,7 @@ barcoding and does not require microfluidic equipments <span class="citation">(<
 <span>  <span class="va">fa</span> <span class="op">&lt;-</span> <span class="st">"~/subset_GRCh38.fa"</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="st">"~/sce_lib10"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="st">"~/sce_lib10.qs"</span><span class="op">)</span> <span class="op">|</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="st">"~/sce_lib90.qs"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"https://zenodo.org/records/12770737/files/sce_lib10.qs?download=1"</span>, <span class="st">"sce_lib10.qs"</span>, mode <span class="op">=</span> <span class="st">'wb'</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"https://zenodo.org/records/12770737/files/sce_lib90.qs?download=1"</span>, <span class="st">"sce_lib90.qs"</span>, mode <span class="op">=</span> <span class="st">'wb'</span><span class="op">)</span></span>
 <span>  <span class="va">sce_lib10</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"sce_lib10.qs"</span><span class="op">)</span></span>
@@ -226,7 +197,7 @@ protocol. The names can be arbitrary for each sequence, but the names
 <span><span class="co">## BC: NNNNNNNNNNNNNNNN</span></span>
 <span><span class="co">## UMI: NNNNNNNNNNNN</span></span>
 <span><span class="co">## polyT: TTTTTTTTT</span></span>
-<span><span class="co">## Setting known barcodes from /tmp/RtmpF7jzLj/file66967e44bfb/bc_allow.tsv</span></span>
+<span><span class="co">## Setting known barcodes from /tmp/RtmpNQTPcg/file9242d929a6a/bc_allow.tsv</span></span>
 <span><span class="co">## Number of known barcodes: 143</span></span>
 <span><span class="co">## Searching for barcodes...</span></span>
 <span><span class="co">## Number of reads processed: 393</span></span>
@@ -247,16 +218,35 @@ first raw read:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_lines.html" class="external-link">read_lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">outdir</span>, <span class="st">"demultiplexed.fq"</span><span class="op">)</span>, n_max <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "@CGGGTCAGTAGTAGTA_CCGGGCTGTCTT#50409b8e-c5c8-4b86-8d2b-95effbb4434c_-1of1"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </span></span>
 <span><span class="co">## [2] "AGTAGGAGCTTTTAGTTTATTTGTCCTCTCAGAAATCTGCACATCACAGCAAACATCAAGTCACTGCAGATCTACTCCTTGGCTGTATCCAATCTCCACTCACTTTTTGCATAGCACCAACATTACTCTCGCCGTGCCCCTGACCTTCTTCATTCTGTTCTTGTGTCTCTTTTCTGCTGTTTTCGGAGGTCTTTCTCTCATAAAGGCCATGTCTTGCCAGTCTGTGTTTAGGCTCATCTTCTTGCATAATCTAAAGAATCATAGATCATGCCAAAGCTAGTGGTCTTGCTACCAATTGAAGTGGGTTCTGAATCCAAATACAAAGATGACATCTGGTGTGGTTTTGTACATTTTGGCCAGCTTTTCCTGAATTTCACCTTTTGGTACTGTTGCCTTCCCAGGATGAAGGATATCAATGACCATCTGTTTCCTCTGAGCAGATTTGGGTTGGTCATGAACTTCCTGGTCCGGATGGTTACTGTCATTCATGATGGCTACGGCGCCGAGCCGGGAGAGGAGGAAAAGAGGACCGCTCACTGCCGACCAATCATATCAACGCGCAAGGCCCCAGCGGATCGCGTTGATACCACTGCTTAGCAACTGAACGGCAAC"</span></span></code></pre>
+<p>This was done with an Rcpp version of <em>flexiplex</em> <span class="citation">(<a href="#ref-chengFlexiplexVersatileDemultiplexer2024">Cheng <em>et
+al.</em>, 2024-03-01</a>)</span>, and is equivalent to calling using the
+native <code>flexiplex</code> command line tool with the following
+arguments:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a> <span class="ex">~/flexiplex/flexiplex</span> <span class="at">-x</span> CTACACGACGCTCTTCCGATCT <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="at">-b</span> <span class="st">'????????????????'</span> <span class="at">-u</span> <span class="st">'????????????'</span> <span class="at">-x</span> TTTTTTTTT <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="at">-e</span> 2 <span class="at">-f</span> 8 <span class="at">-k</span> bc_allow.tsv musc_rps24.fastq <span class="op">&gt;</span> main_out.fq</span></code></pre></div>
+<p>If cell barcodes are not known in advance, e.g. when there is no
+coupled short-reads, the <code>BLAZE</code> tool <span class="citation">(<a href="#ref-youIdentificationCellBarcodes2023">You
+<em>et al.</em>, 2023-04-06</a>)</span> can be used to identify the cell
+barcodes and UMI sequences , and <code>FLAMES</code> also provides a
+wrapper <code><a href="https://rdrr.io/pkg/FLAMES/man/blaze.html" class="external-link">FLAMES::blaze</a></code> to call <code>BLAZE</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/FLAMES/man/blaze.html" class="external-link">blaze</a></span><span class="op">(</span></span>
+<span>  <span class="fl">100</span>,</span>
+<span>  fq_in <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/fastq/musc_rps24.fastq.gz"</span>, package <span class="op">=</span> <span class="st">"FLAMES"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="alignment">Alignment<a class="anchor" aria-label="anchor" href="#alignment"></a>
 </h3>
 <p>Once the reads are processed, they are ready to be aligned to the
-reference genome. <code>FLAMES</code> calls <code>minimap2</code> to
-perform alignment and <code>samtoools</code> to sort and index the BAM
-file, so we need to make sure the binaries are available in
-<code>$PATH</code> for <code>FLAMES</code> to find it.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+reference genome. <code>FLAMES</code> calls <code>minimap2</code> <span class="citation">(<a href="#ref-liMinimap2PairwiseAlignment2018">Li,
+2018-09-15</a>)</span> to perform alignment and <code>samtoools</code>
+<span class="citation">(<a href="#ref-liSequenceAlignmentMap2009">Li
+<em>et al.</em>, 2009-08-15</a>)</span> to sort and index the BAM file,
+so we need to make sure the binaries are available in <code>$PATH</code>
+for <code>FLAMES</code> to find it.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/FLAMES/man/sys_which.html" class="external-link">sys_which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"minimap2"</span>, <span class="st">"k8"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/FLAMES/man/minimap2_align.html" class="external-link">minimap2_align</a></span><span class="op">(</span></span>
 <span>        config <span class="op">=</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html" class="external-link">fromJSON</a></span><span class="op">(</span></span>
@@ -271,15 +261,18 @@ file, so we need to make sure the binaries are available in
 <p><code>FLAMES</code> then performs gene quantification, isoform
 identification and isoform quantification. For the interest of time we
 will skip running them individually, as <code>FLAMES</code> also
-provides the <code>sc_long_pipeline</code> wrapper to do all steps.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+provides the <code>sc_long_pipeline</code> wrapper to do all steps. It
+will return a <code>SingleCellExperiment</code> object with the isoform
+counts, and the isoform annotations stored in the <code>rowRanges</code>
+slot. Let’s run the pipeline with a small number of reads:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">FLAMES</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FLAMES/man/sc_long_pipeline.html" class="external-link">sc_long_pipeline</a></span><span class="op">(</span></span>
-<span>  genome_fa <span class="op">=</span> <span class="va">fa</span>,</span>
+<span>  genome_fa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/rps24.fa.gz"</span>, package <span class="op">=</span> <span class="st">"FLAMES"</span><span class="op">)</span>,</span>
 <span>  fastq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/fastq/musc_rps24.fastq.gz"</span>, package <span class="op">=</span> <span class="st">"FLAMES"</span><span class="op">)</span>,</span>
 <span>  annotation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/rps24.gtf.gz"</span>, package <span class="op">=</span> <span class="st">"FLAMES"</span><span class="op">)</span>,</span>
 <span>  outdir <span class="op">=</span> <span class="va">outdir</span>,</span>
 <span>  barcodes_file <span class="op">=</span> <span class="va">bc_allow</span>,</span>
-<span>  minimap2 <span class="op">=</span> <span class="st">'~/k8-1.2/k8-x86_64-Linux'</span>, <span class="co"># apt does not package k8 with minimap2</span></span>
+<span>  k8 <span class="op">=</span> <span class="st">'~/k8'</span>, <span class="co"># apt does not package k8 with minimap2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -288,8 +281,10 @@ provides the <code>sc_long_pipeline</code> wrapper to do all steps.</p>
 </h2>
 <p>After running the pipeline, we get a
 <code>SingleCellExperiment</code> object and we can finally start some
-analysis.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+analysis. Let’s load the <code>SingleCellExperiment</code> object from
+our previous cell line mixture data <span class="citation">(<a href="#ref-tianComprehensiveCharacterizationSinglecell2021">Tian <em>et
+al.</em>, 2021-11-11</a>)</span>.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sce.qs"</span>, package <span class="op">=</span> <span class="st">"IgniteRNAseq"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sce</span></span></code></pre></div>
 <pre><code><span><span class="co">## class: SingleCellExperiment </span></span>
@@ -306,7 +301,7 @@ analysis.</p>
 <span><span class="co">## reducedDimNames(0):</span></span>
 <span><span class="co">## mainExpName: NULL</span></span>
 <span><span class="co">## altExpNames(1): gene</span></span></code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'gene'</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## class: SingleCellExperiment </span></span>
 <span><span class="co">## dim: 14555 162 </span></span>
@@ -321,9 +316,11 @@ analysis.</p>
 <span><span class="co">## reducedDimNames(0):</span></span>
 <span><span class="co">## mainExpName: NULL</span></span>
 <span><span class="co">## altExpNames(0):</span></span></code></pre>
-<p>We can use Bioconductor packages for normalization, dimensionality
-reduction and clustering:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<p>I have also attached the gene count matrix from long-reads to the
+<code>altExp</code> slot. Let’s do clustering with the gene counts,
+using Bioconductor packages for normalization, dimensionality reduction
+and clustering:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'gene'</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'gene'</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">scuttle</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html" class="external-link">runPCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -338,13 +335,12 @@ reduction and clustering:</p>
 <span></span>
 <span><span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'gene'</span><span class="op">)</span>, <span class="st">'UMAP'</span>, colour_by <span class="op">=</span> <span class="st">'sizeFactor'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FLAMESWorkflow_files/figure-html/sce_preprocessing-1.png" width="700"></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'gene'</span><span class="op">)</span>, <span class="st">'UMAP'</span>, colour_by <span class="op">=</span> <span class="st">'cluster'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FLAMESWorkflow_files/figure-html/sce_preprocessing-2.png" width="700"></p>
 <p>We can clearly see the five cell lines are identified by the
-clustering using the gene counts (quantified from the long-reads). Now
-let’s see if we can get mutations / isoforms specific to each cell
-line.</p>
+clustering using the gene counts from the long-reads. Now let’s see if
+we can get mutations / isoforms specific to each cell line.</p>
 </div>
 <div class="section level2">
 <h2 id="mutation-analysis">Mutation analysis<a class="anchor" aria-label="anchor" href="#mutation-analysis"></a>
@@ -356,7 +352,7 @@ line.</p>
 can use the <code><a href="https://rdrr.io/pkg/FLAMES/man/find_variants.html" class="external-link">FLAMES::find_variants</a></code> function get bulk
 mutation count (similar to the <code>samtools mpileup</code> command,
 but in a tibble format with extra information):</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mutation_discovery_tb</span> <span class="op">&lt;-</span> <span class="fu">FLAMES</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FLAMES/man/find_variants.html" class="external-link">find_variants</a></span><span class="op">(</span></span>
 <span>  <span class="va">bam</span>,</span>
 <span>  <span class="va">fa</span>,</span>
@@ -367,12 +363,12 @@ but in a tibble format with extra information):</p>
 <span>  names_from <span class="op">=</span> <span class="st">"gene_name"</span>,</span>
 <span>  threads <span class="op">=</span> <span class="fl">4</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 09:19:46 Reading reference ...</span></span></code></pre>
-<pre><code><span><span class="co">## 09:19:46 Reading annotation ...</span></span></code></pre>
-<pre><code><span><span class="co">## 09:19:46 Got 1 bam file, parallelizing over each region ...</span></span></code></pre>
-<pre><code><span><span class="co">## 09:20:38 Merging results ...</span></span></code></pre>
-<pre><code><span><span class="co">## 09:20:38 Calculating homopolymer percentages ...</span></span></code></pre>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## 04:31:24 Reading reference ...</span></span></code></pre>
+<pre><code><span><span class="co">## 04:31:24 Reading annotation ...</span></span></code></pre>
+<pre><code><span><span class="co">## 04:31:24 Got 1 bam file, parallelizing over each region ...</span></span></code></pre>
+<pre><code><span><span class="co">## 04:32:10 Merging results ...</span></span></code></pre>
+<pre><code><span><span class="co">## 04:32:10 Calculating homopolymer percentages ...</span></span></code></pre>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mutation_discovery_tb</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,088 × 10</span></span></span>
 <span><span class="co">##    seqnames   pos nucleotide count    sum     freq ref   bam_path   region homopolymer_pct</span></span>
@@ -392,7 +388,7 @@ but in a tibble format with extra information):</p>
 alternative allele frequency are likely to be sequencing errors;
 Nanopore is also known to have higher error rate in homopolymer regions,
 so we can filter out those as well:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mutation_discovery_tb</span> <span class="op">&lt;-</span> <span class="va">mutation_discovery_tb</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">freq</span> <span class="op">&gt;</span> <span class="fl">0.2</span>, <span class="va">freq</span> <span class="op">&lt;</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span></span>
@@ -419,7 +415,7 @@ can call mutations at the single-cell level, and associate them with
 transcription profiles.</p>
 <p><code>FLAMES</code> offers the <code>sc_mutations</code> function to
 call mutations at the single-cell level:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">snps_tb</span> <span class="op">&lt;-</span> <span class="fu">FLAMES</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FLAMES/man/sc_mutations.html" class="external-link">sc_mutations</a></span><span class="op">(</span></span>
 <span>  <span class="va">bam</span>,</span>
 <span>  seqnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">mutation_discovery_tb</span><span class="op">$</span><span class="va">seqnames</span><span class="op">)</span>,</span>
@@ -428,14 +424,14 @@ call mutations at the single-cell level:</p>
 <span>  barcodes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span>,</span>
 <span>  threads <span class="op">=</span> <span class="fl">4</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 09:21:14 Got 1 bam file, parallelizing over each position ...</span></span></code></pre>
-<pre><code><span><span class="co">## 09:22:06 Merging results ...</span></span></code></pre>
+<pre><code><span><span class="co">## 04:32:45 Got 1 bam file, parallelizing over each position ...</span></span></code></pre>
+<pre><code><span><span class="co">## 04:33:35 Merging results ...</span></span></code></pre>
 <p>Lets visualize the SNP status of each cell on the long-read derived
 UMAP. We will color the cell by the allele that is supported by more
 than half of the reads from that cell. This can be done easily with some
 tidyverse functions. The cell lines are homozygous, but with e.g. cancer
 data this could require more considerations.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">snps_tb</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 7</span></span></span>
 <span><span class="co">##   allele barcode          allele_count cell_total_reads     pct   pos seqname</span></span>
@@ -446,7 +442,7 @@ data this could require more considerations.</p>
 <span><span class="co">## <span style="color: #BCBCBC;">4</span> A      AATCACGGTCCTCCTA            7             <span style="text-decoration: underline;">1</span>728 0.004<span style="text-decoration: underline;">05</span>  <span style="text-decoration: underline;">7</span>028 chrM   </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">5</span> A      AATCGACAGGGTGGGA            5             <span style="text-decoration: underline;">1</span>611 0.003<span style="text-decoration: underline;">10</span>  <span style="text-decoration: underline;">7</span>028 chrM   </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">6</span> A      AATCGACTCGTTTACT            2             <span style="text-decoration: underline;">1</span>196 0.001<span style="text-decoration: underline;">67</span>  <span style="text-decoration: underline;">7</span>028 chrM</span></span></code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chr19</span> <span class="op">&lt;-</span> <span class="va">snps_tb</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">allele_count</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="va">pct</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">seqname</span> <span class="op">==</span> <span class="st">'chr19'</span>, <span class="va">pos</span> <span class="op">==</span> <span class="fl">48965830</span><span class="op">)</span></span>
@@ -454,7 +450,7 @@ data this could require more considerations.</p>
 <span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'gene'</span><span class="op">)</span>, <span class="st">'UMAP'</span>, colour_by <span class="op">=</span> <span class="va">chr19</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FLAMESWorkflow_files/figure-html/view_mutations-1.png" width="700"></p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chrM_7028</span> <span class="op">&lt;-</span> <span class="va">snps_tb</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">allele_count</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="va">pct</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">seqname</span> <span class="op">==</span> <span class="st">'chrM'</span>, <span class="va">pos</span> <span class="op">==</span> <span class="fl">7028</span><span class="op">)</span></span>
@@ -462,7 +458,7 @@ data this could require more considerations.</p>
 <span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'gene'</span><span class="op">)</span>, <span class="st">'UMAP'</span>, colour_by <span class="op">=</span> <span class="va">chrM_7028</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FLAMESWorkflow_files/figure-html/view_mutations-2.png" width="700"></p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chrM_8251</span> <span class="op">&lt;-</span> <span class="va">snps_tb</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">allele_count</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="va">pct</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">seqname</span> <span class="op">==</span> <span class="st">'chrM'</span>, <span class="va">pos</span> <span class="op">==</span> <span class="fl">8251</span><span class="op">)</span></span>
@@ -470,7 +466,7 @@ data this could require more considerations.</p>
 <span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'gene'</span><span class="op">)</span>, <span class="st">'UMAP'</span>, colour_by <span class="op">=</span> <span class="va">chrM_8251</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FLAMESWorkflow_files/figure-html/view_mutations-3.png" width="700"></p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chrM_9123</span> <span class="op">&lt;-</span> <span class="va">snps_tb</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">allele_count</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="va">pct</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">seqname</span> <span class="op">==</span> <span class="st">'chrM'</span>, <span class="va">pos</span> <span class="op">==</span> <span class="fl">9123</span><span class="op">)</span></span>
@@ -478,7 +474,7 @@ data this could require more considerations.</p>
 <span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'gene'</span><span class="op">)</span>, <span class="st">'UMAP'</span>, colour_by <span class="op">=</span> <span class="va">chrM_9123</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FLAMESWorkflow_files/figure-html/view_mutations-4.png" width="700"></p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chrM_11719</span> <span class="op">&lt;-</span> <span class="va">snps_tb</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">allele_count</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="va">pct</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">seqname</span> <span class="op">==</span> <span class="st">'chrM'</span>, <span class="va">pos</span> <span class="op">==</span> <span class="fl">11719</span><span class="op">)</span></span>
@@ -497,7 +493,7 @@ we have two replicate samples, and we devide the cells in each sample by
 a SNP mutation status. We can use <code>limma</code> to find
 differentially transcribed genes in the mutated vs reference cells.</p>
 <p>First we need to aggregate the counts to pseudo-bulk samples:</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># aggregate to pseudo-bulk counts</span></span>
 <span><span class="va">pseudo_bulk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -527,7 +523,7 @@ differentially transcribed genes in the mutated vs reference cells.</p>
 between-group variation. Let’s use <code>limma</code> to find
 significantly differentiated expressed transcripts between the mutated
 and reference cells.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dgelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/calcNormFactors.html" class="external-link">calcNormFactors</a></span><span class="op">(</span><span class="va">dgelist</span>, method <span class="op">=</span> <span class="st">"TMM"</span><span class="op">)</span></span>
 <span><span class="co"># means model</span></span>
 <span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">dgelist</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">group</span>, data <span class="op">=</span> <span class="va">dgelist</span><span class="op">$</span><span class="va">samples</span><span class="op">)</span></span>
@@ -554,7 +550,7 @@ and reference cells.</p>
 <span><span class="co">## ENST00000368716.9   4.90    6.44   8.25 2.14e-05    0.0306 3.14</span></span></code></pre>
 <p>Let’s visualise the top differentially expressed transcript on the
 UMAP:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html" class="external-link">plotReducedDim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span><span class="op">[</span>, <span class="va">sce</span><span class="op">$</span><span class="va">cluster</span> <span class="op">!=</span> <span class="fl">2</span><span class="op">]</span>, <span class="st">'gene'</span><span class="op">)</span>, <span class="st">'UMAP'</span>, </span>
 <span>  colour_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">[</span><span class="st">'ENST00000621160.5'</span>, <span class="va">sce</span><span class="op">$</span><span class="va">cluster</span> <span class="op">!=</span> <span class="fl">2</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  shape_by <span class="op">=</span>  <span class="st">"cluster"</span></span>
@@ -574,21 +570,17 @@ al.</em>, 2019-02</a>)</span>. <img src="DTU_DTE.png" width="800"></p>
 test against uniform distribution). It will ignore the transcription
 start site and end site differences and only consider splicing
 differences.</p>
-<pre><code><span><span class="co">## Loading isoform_FSM_annotation.csv ...</span></span>
-<span><span class="co">## Selecting transcript_ids with full splice match ...</span></span>
-<span><span class="co">## Summing transcripts with same FSM ... </span></span>
-<span><span class="co">## Creating FSM_count.csv.gz ...</span></span>
-<span><span class="co">## /tmp/RtmpF7jzLj/FSM_count.csv.gz saved.</span></span>
-<span><span class="co">##   12340 FSM_match(s) found.</span></span>
-<span><span class="co">## Filtering for genes with at least 2 detected isforms ...      8895 FSM_match(s) left.</span></span>
-<span><span class="co">## Keeping only the top 4 expressed FSM_matches for each gene ...      7783 FSM_match(s) left.</span></span>
-<span><span class="co">## Aggregating counts by cluster labels ...</span></span>
-<span><span class="co">## Filtering isoforms ... 7783  transcript_id(s) remaining.</span></span>
-<span><span class="co">## Performing Chi-square tests ...</span></span>
-<span><span class="co">##   |                                                                                        |                                                                                |   0%  |                                                                                        |                                                                                |   1%  |                                                                                        |=                                                                               |   1%  |                                                                                        |=                                                                               |   2%  |                                                                                        |==                                                                              |   2%  |                                                                                        |==                                                                              |   3%  |                                                                                        |===                                                                             |   3%  |                                                                                        |===                                                                             |   4%  |                                                                                        |====                                                                            |   4%  |                                                                                        |====                                                                            |   5%  |                                                                                        |====                                                                            |   6%  |                                                                                        |=====                                                                           |   6%  |                                                                                        |=====                                                                           |   7%  |                                                                                        |======                                                                          |   7%  |                                                                                        |======                                                                          |   8%  |                                                                                        |=======                                                                         |   8%  |                                                                                        |=======                                                                         |   9%  |                                                                                        |========                                                                        |   9%  |                                                                                        |========                                                                        |  10%  |                                                                                        |========                                                                        |  11%  |                                                                                        |=========                                                                       |  11%  |                                                                                        |=========                                                                       |  12%  |                                                                                        |==========                                                                      |  12%  |                                                                                        |==========                                                                      |  13%  |                                                                                        |===========                                                                     |  13%  |                                                                                        |===========                                                                     |  14%  |                                                                                        |============                                                                    |  14%  |                                                                                        |============                                                                    |  15%  |                                                                                        |============                                                                    |  16%  |                                                                                        |=============                                                                   |  16%  |                                                                                        |=============                                                                   |  17%  |                                                                                        |==============                                                                  |  17%  |                                                                                        |==============                                                                  |  18%  |                                                                                        |===============                                                                 |  18%  |                                                                                        |===============                                                                 |  19%  |                                                                                        |================                                                                |  19%  |                                                                                        |================                                                                |  20%  |                                                                                        |================                                                                |  21%  |                                                                                        |=================                                                               |  21%  |                                                                                        |=================                                                               |  22%  |                                                                                        |==================                                                              |  22%  |                                                                                        |==================                                                              |  23%  |                                                                                        |===================                                                             |  23%  |                                                                                        |===================                                                             |  24%  |                                                                                        |====================                                                            |  24%  |                                                                                        |====================                                                            |  25%  |                                                                                        |====================                                                            |  26%  |                                                                                        |=====================                                                           |  26%  |                                                                                        |=====================                                                           |  27%  |                                                                                        |======================                                                          |  27%  |                                                                                        |======================                                                          |  28%  |                                                                                        |=======================                                                         |  28%  |                                                                                        |=======================                                                         |  29%  |                                                                                        |========================                                                        |  29%  |                                                                                        |========================                                                        |  30%  |                                                                                        |========================                                                        |  31%  |                                                                                        |=========================                                                       |  31%  |                                                                                        |=========================                                                       |  32%  |                                                                                        |==========================                                                      |  32%  |                                                                                        |==========================                                                      |  33%  |                                                                                        |===========================                                                     |  33%  |                                                                                        |===========================                                                     |  34%  |                                                                                        |============================                                                    |  34%  |                                                                                        |============================                                                    |  35%  |                                                                                        |============================                                                    |  36%  |                                                                                        |=============================                                                   |  36%  |                                                                                        |=============================                                                   |  37%  |                                                                                        |==============================                                                  |  37%  |                                                                                        |==============================                                                  |  38%  |                                                                                        |===============================                                                 |  38%  |                                                                                        |===============================                                                 |  39%  |                                                                                        |================================                                                |  39%  |                                                                                        |================================                                                |  40%  |                                                                                        |================================                                                |  41%  |                                                                                        |=================================                                               |  41%  |                                                                                        |=================================                                               |  42%  |                                                                                        |==================================                                              |  42%  |                                                                                        |==================================                                              |  43%  |                                                                                        |===================================                                             |  43%  |                                                                                        |===================================                                             |  44%  |                                                                                        |====================================                                            |  44%  |                                                                                        |====================================                                            |  45%  |                                                                                        |====================================                                            |  46%  |                                                                                        |=====================================                                           |  46%  |                                                                                        |=====================================                                           |  47%  |                                                                                        |======================================                                          |  47%  |                                                                                        |======================================                                          |  48%  |                                                                                        |=======================================                                         |  48%  |                                                                                        |=======================================                                         |  49%  |                                                                                        |========================================                                        |  49%  |                                                                                        |========================================                                        |  50%  |                                                                                        |========================================                                        |  51%  |                                                                                        |=========================================                                       |  51%  |                                                                                        |=========================================                                       |  52%  |                                                                                        |==========================================                                      |  52%  |                                                                                        |==========================================                                      |  53%  |                                                                                        |===========================================                                     |  53%  |                                                                                        |===========================================                                     |  54%  |                                                                                        |============================================                                    |  54%  |                                                                                        |============================================                                    |  55%  |                                                                                        |============================================                                    |  56%  |                                                                                        |=============================================                                   |  56%  |                                                                                        |=============================================                                   |  57%  |                                                                                        |==============================================                                  |  57%  |                                                                                        |==============================================                                  |  58%  |                                                                                        |===============================================                                 |  58%  |                                                                                        |===============================================                                 |  59%  |                                                                                        |================================================                                |  59%  |                                                                                        |================================================                                |  60%  |                                                                                        |================================================                                |  61%  |                                                                                        |=================================================                               |  61%  |                                                                                        |=================================================                               |  62%  |                                                                                        |==================================================                              |  62%  |                                                                                        |==================================================                              |  63%  |                                                                                        |===================================================                             |  63%  |                                                                                        |===================================================                             |  64%  |                                                                                        |====================================================                            |  64%  |                                                                                        |====================================================                            |  65%  |                                                                                        |====================================================                            |  66%  |                                                                                        |=====================================================                           |  66%  |                                                                                        |=====================================================                           |  67%  |                                                                                        |======================================================                          |  67%  |                                                                                        |======================================================                          |  68%  |                                                                                        |=======================================================                         |  68%  |                                                                                        |=======================================================                         |  69%  |                                                                                        |========================================================                        |  69%  |                                                                                        |========================================================                        |  70%  |                                                                                        |========================================================                        |  71%  |                                                                                        |=========================================================                       |  71%  |                                                                                        |=========================================================                       |  72%  |                                                                                        |==========================================================                      |  72%  |                                                                                        |==========================================================                      |  73%  |                                                                                        |===========================================================                     |  73%  |                                                                                        |===========================================================                     |  74%  |                                                                                        |============================================================                    |  74%  |                                                                                        |============================================================                    |  75%  |                                                                                        |============================================================                    |  76%  |                                                                                        |=============================================================                   |  76%  |                                                                                        |=============================================================                   |  77%  |                                                                                        |==============================================================                  |  77%  |                                                                                        |==============================================================                  |  78%  |                                                                                        |===============================================================                 |  78%  |                                                                                        |===============================================================                 |  79%  |                                                                                        |================================================================                |  79%  |                                                                                        |================================================================                |  80%  |                                                                                        |================================================================                |  81%  |                                                                                        |=================================================================               |  81%  |                                                                                        |=================================================================               |  82%  |                                                                                        |==================================================================              |  82%  |                                                                                        |==================================================================              |  83%  |                                                                                        |===================================================================             |  83%  |                                                                                        |===================================================================             |  84%  |                                                                                        |====================================================================            |  84%  |                                                                                        |====================================================================            |  85%  |                                                                                        |====================================================================            |  86%  |                                                                                        |=====================================================================           |  86%  |                                                                                        |=====================================================================           |  87%  |                                                                                        |======================================================================          |  87%  |                                                                                        |======================================================================          |  88%  |                                                                                        |=======================================================================         |  88%  |                                                                                        |=======================================================================         |  89%  |                                                                                        |========================================================================        |  89%  |                                                                                        |========================================================================        |  90%  |                                                                                        |========================================================================        |  91%  |                                                                                        |=========================================================================       |  91%  |                                                                                        |=========================================================================       |  92%  |                                                                                        |==========================================================================      |  92%  |                                                                                        |==========================================================================      |  93%  |                                                                                        |===========================================================================     |  93%  |                                                                                        |===========================================================================     |  94%  |                                                                                        |============================================================================    |  94%  |                                                                                        |============================================================================    |  95%  |                                                                                        |============================================================================    |  96%  |                                                                                        |=============================================================================   |  96%  |                                                                                        |=============================================================================   |  97%  |                                                                                        |==============================================================================  |  97%  |                                                                                        |==============================================================================  |  98%  |                                                                                        |=============================================================================== |  98%  |                                                                                        |=============================================================================== |  99%  |                                                                                        |================================================================================|  99%  |                                                                                        |================================================================================| 100%</span></span>
-<span><span class="co">## Results saved to  /tmp/RtmpF7jzLj/sc_DTU_analysis.csv</span></span></code></pre>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># The splice sites are saved in isoform_FSM_annotation.csv during</span></span>
+<span><span class="co"># isoform identification. Let's make sure it is available:</span></span>
+<span><span class="va">sce</span><span class="op">@</span><span class="va">metadata</span><span class="op">$</span><span class="va">OutputFiles</span><span class="op">$</span><span class="va">outdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">'https://zenodo.org/records/12751214/files/isoform_FSM_annotation.csv?download=1'</span>, </span>
+<span>              <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">sce</span><span class="op">@</span><span class="va">metadata</span><span class="op">$</span><span class="va">OutputFiles</span><span class="op">$</span><span class="va">outdir</span>, <span class="st">"isoform_FSM_annotation.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/colLabels.html" class="external-link">colLabels</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">sce</span><span class="op">$</span><span class="va">cluster</span></span>
+<span><span class="va">dtu_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/FLAMES/man/sc_DTU_analysis.html" class="external-link">sc_DTU_analysis</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code></pre></div>
 <p>We will get a data frame with the chi-square test results:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dtu_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##              gene_id X_value df                                   DTU_tr DTU_group</span></span>
 <span><span class="co">## 794  ENSG00000130066    2311 12   ENSG00000130066.17_23783173_23799848_2         4</span></span>
@@ -611,20 +603,20 @@ differences.</p>
 similar to <code>FLT-seq</code>, where matching short-reads are
 available for both the smaller sub-sample and the larger sub-sample, we
 provide some additional plotting functions:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multiAssay</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/FLAMES/man/combine_sce.html" class="external-link">combine_sce</a></span><span class="op">(</span></span>
 <span>  <span class="va">sce_lib90</span>,</span>
 <span>  <span class="va">sce_lib10</span>,</span>
 <span>  <span class="va">sce</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning: sampleMap[['assay']] coerced with as.factor()</span></span></code></pre>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">$</span><span class="va">transcript_id</span> <span class="op">==</span><span class="st">'ENST00000391751.7'</span>, <span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## DataFrame with 1 row and 3 columns</span></span>
 <span><span class="co">##                       transcript_id            gene_id         FSM_match</span></span>
 <span><span class="co">##                         &lt;character&gt;        &lt;character&gt;       &lt;character&gt;</span></span>
 <span><span class="co">## ENST00000391751.7 ENST00000391751.7 ENSG00000170889.14 ENST00000391751.7</span></span></code></pre>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/FLAMES/man/sc_umap_expression.html" class="external-link">sc_umap_expression</a></span><span class="op">(</span><span class="st">"ENSG00000170889.14"</span>, <span class="va">multiAssay</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## harmonizing input:</span></span>
 <span><span class="co">##   removing 3 sampleMap rows with 'colname' not in colnames of experiments</span></span></code></pre>
@@ -650,7 +642,7 @@ provide some additional plotting functions:</p>
 <pre><code><span><span class="co">## Warning in get_plot_component(plot, "guide-box"): Multiple components found; returning</span></span>
 <span><span class="co">## the first one. To return all, use `return_all = TRUE`.</span></span></code></pre>
 <p><img src="FLAMESWorkflow_files/figure-html/sc_umap-1.png" width="700"></p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
@@ -676,10 +668,10 @@ provide some additional plotting functions:</p>
 <span><span class="co">##  [1] edgeR_4.3.5                 limma_3.61.4                lubridate_1.9.3            </span></span>
 <span><span class="co">##  [4] forcats_1.0.0               stringr_1.5.1               dplyr_1.1.4                </span></span>
 <span><span class="co">##  [7] purrr_1.0.2                 readr_2.1.5                 tidyr_1.3.1                </span></span>
-<span><span class="co">## [10] tibble_3.2.1                tidyverse_2.0.0             scater_1.33.2              </span></span>
-<span><span class="co">## [13] ggplot2_3.5.1               scuttle_1.15.1              SingleCellExperiment_1.27.2</span></span>
+<span><span class="co">## [10] tibble_3.2.1                tidyverse_2.0.0             scater_1.33.3              </span></span>
+<span><span class="co">## [13] ggplot2_3.5.1               scuttle_1.15.2              SingleCellExperiment_1.27.2</span></span>
 <span><span class="co">## [16] SummarizedExperiment_1.35.1 Biobase_2.65.0              GenomicRanges_1.57.1       </span></span>
-<span><span class="co">## [19] GenomeInfoDb_1.41.1         IRanges_2.39.1              S4Vectors_0.43.1           </span></span>
+<span><span class="co">## [19] GenomeInfoDb_1.41.1         IRanges_2.39.2              S4Vectors_0.43.2           </span></span>
 <span><span class="co">## [22] BiocGenerics_0.51.0         MatrixGenerics_1.17.0       matrixStats_1.3.0          </span></span>
 <span><span class="co">## [25] FLAMES_1.11.0              </span></span>
 <span><span class="co">## </span></span>
@@ -687,7 +679,7 @@ provide some additional plotting functions:</p>
 <span><span class="co">##   [1] fs_1.6.4                    ProtGenerics_1.37.0         bitops_1.0-7               </span></span>
 <span><span class="co">##   [4] httr_1.4.7                  RColorBrewer_1.1-3          doParallel_1.0.17          </span></span>
 <span><span class="co">##   [7] tools_4.4.1                 backports_1.5.0             utf8_1.2.4                 </span></span>
-<span><span class="co">##  [10] R6_2.5.1                    HDF5Array_1.33.3            uwot_0.2.2                 </span></span>
+<span><span class="co">##  [10] R6_2.5.1                    HDF5Array_1.33.4            uwot_0.2.2                 </span></span>
 <span><span class="co">##  [13] lazyeval_0.2.2              rhdf5filters_1.17.0         GetoptLong_1.0.5           </span></span>
 <span><span class="co">##  [16] withr_3.0.0                 prettyunits_1.2.0           GGally_2.2.1               </span></span>
 <span><span class="co">##  [19] gridExtra_2.3               cli_3.6.3                   textshaping_0.4.0          </span></span>
@@ -700,7 +692,7 @@ provide some additional plotting functions:</p>
 <span><span class="co">##  [40] BiocIO_1.15.0               vroom_1.6.5                 Matrix_1.7-0               </span></span>
 <span><span class="co">##  [43] ggbeeswarm_0.7.2            fansi_1.0.6                 abind_1.4-5                </span></span>
 <span><span class="co">##  [46] R.methodsS3_1.8.2           lifecycle_1.0.4             yaml_2.3.9                 </span></span>
-<span><span class="co">##  [49] rhdf5_2.49.0                SparseArray_1.5.21          BiocFileCache_2.13.0       </span></span>
+<span><span class="co">##  [49] rhdf5_2.49.0                SparseArray_1.5.22          BiocFileCache_2.13.0       </span></span>
 <span><span class="co">##  [52] grid_4.4.1                  blob_1.2.4                  dqrng_0.4.1                </span></span>
 <span><span class="co">##  [55] crayon_1.5.3                dir.expiry_1.13.0           lattice_0.22-6             </span></span>
 <span><span class="co">##  [58] beachmat_2.21.4             cowplot_1.1.3               GenomicFeatures_1.57.0     </span></span>
@@ -718,7 +710,7 @@ provide some additional plotting functions:</p>
 <span><span class="co">##  [94] tidyselect_1.2.1            bit_4.0.5                   compiler_4.4.1             </span></span>
 <span><span class="co">##  [97] curl_5.2.1                  httr2_1.0.2                 graph_1.83.0               </span></span>
 <span><span class="co">## [100] htmlTable_2.4.2             BiocNeighbors_1.23.0        basilisk.utils_1.17.0      </span></span>
-<span><span class="co">## [103] xml2_1.3.6                  desc_1.4.3                  DelayedArray_0.31.8        </span></span>
+<span><span class="co">## [103] xml2_1.3.6                  desc_1.4.3                  DelayedArray_0.31.9        </span></span>
 <span><span class="co">## [106] stringfish_0.16.0           rtracklayer_1.65.0          checkmate_2.3.1            </span></span>
 <span><span class="co">## [109] scales_1.3.0                RBGL_1.81.0                 rappdirs_0.3.3             </span></span>
 <span><span class="co">## [112] digest_0.6.36               rmarkdown_2.27              basilisk_1.17.0            </span></span>
@@ -731,7 +723,7 @@ provide some additional plotting functions:</p>
 <span><span class="co">## [133] R.oo_1.26.0                 BiocSingular_1.21.2         VariantAnnotation_1.51.0   </span></span>
 <span><span class="co">## [136] RCurl_1.98-1.16             magrittr_2.0.3              Formula_1.2-5              </span></span>
 <span><span class="co">## [139] GenomeInfoDbData_1.2.12     Rhdf5lib_1.27.0             munsell_0.5.1              </span></span>
-<span><span class="co">## [142] Rcpp_1.0.12                 viridis_0.6.5               reticulate_1.38.0          </span></span>
+<span><span class="co">## [142] Rcpp_1.0.13                 viridis_0.6.5               reticulate_1.38.0          </span></span>
 <span><span class="co">## [145] stringi_1.8.4               zlibbioc_1.51.1             plyr_1.8.9                 </span></span>
 <span><span class="co">## [148] ggstats_0.6.0               parallel_4.4.1              listenv_0.9.1              </span></span>
 <span><span class="co">## [151] ggrepel_0.9.5               Biostrings_2.73.1           hms_1.1.3                  </span></span>
@@ -752,6 +744,21 @@ provide some additional plotting functions:</p>
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-chengFlexiplexVersatileDemultiplexer2024" class="csl-entry">
+Cheng,O. <em>et al.</em> (2024-03-01) <a href="https://doi.org/10.1093/bioinformatics/btae102" class="external-link">Flexiplex: A
+versatile demultiplexer and search tool for omics data</a>.
+<em>Bioinformatics</em>, <strong>40</strong>, btae102.
+</div>
+<div id="ref-liMinimap2PairwiseAlignment2018" class="csl-entry">
+Li,H. (2018-09-15) <a href="https://doi.org/10.1093/bioinformatics/bty191" class="external-link">Minimap2: Pairwise
+alignment for nucleotide sequences</a>. <em>Bioinformatics</em>,
+<strong>34</strong>, 3094–3100.
+</div>
+<div id="ref-liSequenceAlignmentMap2009" class="csl-entry">
+Li,H. <em>et al.</em> (2009-08-15) <a href="https://doi.org/10.1093/bioinformatics/btp352" class="external-link">The <span>Sequence
+Alignment</span>/<span>Map</span> format and <span>SAMtools</span></a>.
+<em>Bioinformatics</em>, <strong>25</strong>, 2078–2079.
+</div>
 <div id="ref-ntranosDiscriminativeLearningApproach2019" class="csl-entry">
 Ntranos,V. <em>et al.</em> (2019-02) <a href="https://doi.org/10.1038/s41592-018-0303-9" class="external-link">A discriminative
 learning approach to differential expression analysis for single-cell
@@ -780,31 +787,30 @@ with long-read sequencing</a>. <em>Genome Biology</em>,
 <a href="https://kb.10xgenomics.com/hc/en-us/articles/360001378811-What-is-the-maximum-number-of-cells-that-can-be-profiled-" class="external-link">What
 is the maximum number of cells that can be profiled?</a>
 </div>
+<div id="ref-youIdentificationCellBarcodes2023" class="csl-entry">
+You,Y. <em>et al.</em> (2023-04-06) <a href="https://doi.org/10.1186/s13059-023-02907-y" class="external-link">Identification of cell
+barcodes from long-read single-cell <span class="nocase">RNA-seq</span>
+with <span>BLAZE</span></a>. <em>Genome Biology</em>,
+<strong>24</strong>, 66.
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-      </div>
-
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Changqing Wang.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Changqing Wang.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
-
 
 
 
