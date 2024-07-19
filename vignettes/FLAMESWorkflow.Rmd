@@ -4,7 +4,10 @@ author:
   - name: Changqing Wang
     affiliation: The Walter and Eliza Hall Institute of Medical Research, 1G Royal Parade, Parkville, VIC 3052, Melbourne, Australia; Department of Medical Biology, The University of Melbourne, Parkville, VIC 3010, Melbourne, Australia
 date: "16 July 2024"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_float: true
 bibliography: document.bib
 csl: bioinformatics.csl
 link-citations: true
@@ -66,7 +69,7 @@ if (!file.exists("~/subset_GRCh38.fa")) {
   fa <- "~/subset_GRCh38.fa"
 }
 
-if (!file.exists("~/sce_lib10")) {
+if (!file.exists("~/sce_lib10.qs") | !file.exists("~/sce_lib90.qs")) {
   download.file("https://zenodo.org/records/12770737/files/sce_lib10.qs?download=1", "sce_lib10.qs", mode = 'wb')
   download.file("https://zenodo.org/records/12770737/files/sce_lib90.qs?download=1", "sce_lib90.qs", mode = 'wb')
   sce_lib10 <- qs::qread("sce_lib10.qs")
@@ -174,12 +177,12 @@ as `FLAMES` also provides the `sc_long_pipeline` wrapper to do all steps.
 
 ```{r sc_long_pipeline, eval=FALSE}
 sce <- FLAMES::sc_long_pipeline(
-  genome_fa = fa,
+  genome_fa = system.file("extdata/rps24.fa.gz", package = "FLAMES"),
   fastq = system.file("extdata/fastq/musc_rps24.fastq.gz", package = "FLAMES"),
   annotation = system.file("extdata/rps24.gtf.gz", package = "FLAMES"),
   outdir = outdir,
   barcodes_file = bc_allow,
-  minimap2 = '~/k8-1.2/k8-x86_64-Linux', # apt does not package k8 with minimap2
+  k8 = '~/k8', # apt does not package k8 with minimap2
 )
 ```
 
@@ -386,7 +389,7 @@ between DTU and DTE is illustrated by the following figure, adapted from
 The `sc_DTU_analysis` function can test for DTU (chi-squre test against uniform
 distribution). It will ignore the transcription start site and end site differences
 and only consider splicing differences.
-```{r DTU1, message=FALSE, warning=FALSE, echo=FALSE}
+```{r DTU1, message=FALSE, warning=FALSE, results = FALSE}
 # The splice sites are saved in isoform_FSM_annotation.csv during
 # isoform identification. Let's make sure it is available:
 sce@metadata$OutputFiles$outdir <- tempdir()
