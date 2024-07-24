@@ -244,6 +244,14 @@ scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = 'sizeFactor')
 scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = 'cluster')
 ```
 
+```{r sce_preprocessing2}
+# sce <- qs::qread(system.file("extdata", "processed_sce.qs", package = "IgniteRNAseq"))
+download.file("https://raw.githubusercontent.com/ChangqingW/IgniteRNAseq/devel/inst/extdata/processed_sce.qs", "processed_sce.qs", mode = 'wb')
+sce <- qs::qread("processed_sce.qs")
+scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = 'sizeFactor')
+scater::plotReducedDim(altExp(sce, 'gene'), 'UMAP', colour_by = 'cluster')
+```
+
 We can clearly see the five cell lines are identified by the clustering using
 the gene counts from the long-reads. Now let's see if we can get mutations / 
 isoforms specific to each cell line.
