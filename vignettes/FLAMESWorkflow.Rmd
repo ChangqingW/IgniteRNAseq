@@ -451,7 +451,7 @@ to `FLT-seq`, where matching short-reads are available for both the
 smaller sub-sample and the larger sub-sample, we provide some additional
 plotting functions:
 
-```{r sc_umap}
+```{r sc_umap, eval=FALSE}
 multiAssay <- combine_sce(
   sce_lib90,
   sce_lib10,
