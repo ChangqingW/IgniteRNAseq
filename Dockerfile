@@ -17,7 +17,7 @@ RUN aria2c "https://zenodo.org/records/12751214/files/filtered_sorted.bam.bai?do
 RUN aria2c -x 16 "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_47/GRCh38.primary_assembly.genome.fa.gz"
 
 # subset the genome to only include the only chr19
-RUN Rscript -e "library(Biostrings); genome <- readDNAStringSet('GRCh38.primary_assembly.genome.fa.gz') |> setNames(sapply(names(genome), function(x) strsplit(x, ' ')[[1]][1])); chr19 <- genome[genome$names == 'chr19']; writeXStringSet(chr19, 'subset_GRCh38.fa')"
+RUN Rscript -e 'library(Biostrings); genome <- readDNAStringSet("GRCh38.primary_assembly.genome.fa.gz"); names(genome) <- sapply(names(genome), function(x) strsplit(x, " ")[[1]][1]); chr19 <- genome["chr19"]; writeXStringSet(chr19, "subset_GRCh38.fa")'
 
 RUN rm GRCh38.primary_assembly.genome.fa.gz
 

@@ -63,8 +63,8 @@ if (!file.exists("~/filtered_sorted.bam") | !file.exists("~/filtered_sorted.bam.
 
 if (!file.exists("~/subset_GRCh38.fa")) {
   download.file("https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_47/GRCh38.primary_assembly.genome.fa.gz", "GRCh38.primary_assembly.genome.fa.gz", mode = 'wb')
-  genome <- Biostrings::readDNAStringSet("GRCh38.primary_assembly.genome.fa.gz") |>
-    setNames(sapply(names(genome), function(x) strsplit(x, " ")[[1]][1]))
+  genome <- Biostrings::readDNAStringSet("GRCh38.primary_assembly.genome.fa.gz")
+  names(genome) <- sapply(names(genome), function(x) strsplit(x, " ")[[1]][1])
   chr19 <- genome[genome$names == "chr19"]
   Biostrings::writeXStringSet(chr19, "~/subset_GRCh38.fa")
 }
