@@ -1,9 +1,9 @@
-pandoc: '3.2'
-pkgdown: 2.1.0
+pandoc: '3.4'
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   FLAMESWorkflow: FLAMESWorkflow.html
-last_built: 2024-07-24T15:43Z
+last_built: 2024-11-01T10:12Z
 urls:
   reference: https://ChangqingW.github.io/IgniteRNAseq/reference
   article: https://ChangqingW.github.io/IgniteRNAseq/articles
