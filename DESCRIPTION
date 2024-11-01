@@ -1,6 +1,6 @@
 Package: IgniteRNAseq
 Title: Igniting full-length isoform and mutation analysis of single-cell RNA-seq data with FLAMES
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("Changqing", "Wang", role=c("aut", "cre"),
            email="wang.ch@wehi.edu.au",
