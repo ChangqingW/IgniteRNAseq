@@ -266,8 +266,7 @@ mutation_discovery_tb <- FLAMES::find_variants(
   bam,
   fa,
   system.file("extdata", "filtered.gtf", package = "IgniteRNAseq"),
-  min_nucleotide_depth = 100,
-  homopolymer_window = 3,
+  min_nucleotide_depth = 2000,
   annotated_region_only = TRUE,
   names_from = "gene_name",
   threads = 4
