@@ -4,27 +4,28 @@ WORKDIR /home/rstudio
 
 COPY --chown=rstudio:rstudio . /home/rstudio/
 
+RUN sudo apt-get update && sudo apt-get install -y samtools minimap2 aria2
+
 RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); BiocManager::install(ask=FALSE)"
 
 RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); devtools::install('.', dependencies=TRUE, build_vignettes=TRUE, repos = BiocManager::repositories())"
 
-RUN wget "https://zenodo.org/records/12751214/files/filtered_sorted.bam?download=1" -O filtered_sorted.bam
-
-RUN wget "https://zenodo.org/records/12751214/files/filtered_sorted.bam.bai?download=1" -O filtered_sorted.bam.bai
-
-RUN wget "https://zenodo.org/records/12751214/files/subset_GRCh38.fa.gz?download=1" -O subset_GRCh38.fa.gz
-
-RUN gunzip subset_GRCh38.fa.gz
-
-RUN wget "https://zenodo.org/records/12770737/files/sce_lib10.qs?download=1" -O sce_lib10.qs 
-
-RUN wget "https://zenodo.org/records/12770737/files/sce_lib90.qs?download=1" -O sce_lib90.qs
-
-RUN sudo apt-get update && sudo apt-get install -y samtools minimap2 && wget -O- https://github.com/attractivechaos/k8/releases/download/v1.2/k8-1.2.tar.bz2 | tar -jx
-
-RUN sudo ln -s /home/rstudio/k8-1.2/k8-x86_64-Linux /bin/k8 && sudo ln -s /home/rstudio/k8-1.2/k8-x86_64-Linux /home/rstudio/k8
-
 USER rstudio
+
+RUN aria2c -x 16 "https://zenodo.org/records/12751214/files/filtered_sorted.bam?download=1"
+
+RUN aria2c "https://zenodo.org/records/12751214/files/filtered_sorted.bam.bai?download=1"
+
+RUN aria2c -x 16 "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_47/GRCh38.primary_assembly.genome.fa.gz"
+
+# subset the genome to only include the only chr19
+RUN Rscript -e "library(Biostrings); genome <- readDNAStringSet('GRCh38.primary_assembly.genome.fa.gz'); chr19 <- genome[genome$names == 'chr19']; writeXStringSet(chr19, 'subset_GRCh38.fa')"
+
+RUN rm GRCh38.primary_assembly.genome.fa.gz
+
+RUN aria2c -x 16 "https://zenodo.org/records/12770737/files/sce_lib10.qs?download=1"
+
+RUN aria2c -x 16 "https://zenodo.org/records/12770737/files/sce_lib90.qs?download=1"
 
 RUN Rscript -e "basilisk::basiliskRun(env = FLAMES:::flames_env, fun = function(){})"
 

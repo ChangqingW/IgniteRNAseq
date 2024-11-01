@@ -61,13 +61,7 @@ if (!file.exists("~/filtered_sorted.bam") | !file.exists("~/filtered_sorted.bam.
   bam <- path.expand("~/filtered_sorted.bam")
 }
 
-if (!file.exists("~/subset_GRCh38.fa")) {
-  download.file("https://zenodo.org/records/12751214/files/subset_GRCh38.fa.gz?download=1", "subset_GRCh38.fa.gz", mode = 'wb')
-  R.utils::gunzip("subset_GRCh38.fa.gz", destname = "subset_GRCh38.fa", remove = FALSE, skip = TRUE)
-  fa <- "subset_GRCh38.fa"
-} else {
-  fa <- path.expand("~/subset_GRCh38.fa")
-}
+fa <- path.expand("~/subset_GRCh38.fa")
 
 if (!file.exists("~/sce_lib10.qs") | !file.exists("~/sce_lib90.qs")) {
   download.file("https://zenodo.org/records/12770737/files/sce_lib10.qs?download=1", "sce_lib10.qs", mode = 'wb')
@@ -181,17 +175,15 @@ perform alignment and `samtoools` [@liSequenceAlignmentMap2009] to sort
 and index the BAM file, so we need to make sure the binaries are available in 
 `$PATH` for `FLAMES` to find it.
 ```{r alignemnt, eval=FALSE}
-if (!any(is.na(sys_which(c("minimap2", "k8"))))) {
-    minimap2_align(
-        config = jsonlite::fromJSON(
-          system.file('extdata/SIRV_config_default.json', package = 'FLAMES')
-        ),
-        fa_file = fa,
-        fq_in = file.path(outdir, "demultiplexed.fq"),
-        annot = system.file("extdata", "filtered.gtf", package = "IgniteRNAseq"),
-        outdir = outdir
-    )
-}
+minimap2_align(
+    config = jsonlite::fromJSON(
+      system.file('extdata', 'config_sclr_nanopore_3end.json', package = 'FLAMES')
+    ),
+    fa_file = fa,
+    fq_in = file.path(outdir, "demultiplexed.fq"),
+    annot = system.file("extdata", "filtered.gtf", package = "IgniteRNAseq"),
+    outdir = outdir
+)
 ```
 
 `FLAMES` then performs gene quantification, isoform identification and isoform
@@ -207,8 +199,7 @@ sce <- FLAMES::sc_long_pipeline(
   fastq = system.file("extdata/fastq/musc_rps24.fastq.gz", package = "FLAMES"),
   annotation = system.file("extdata/rps24.gtf.gz", package = "FLAMES"),
   outdir = outdir,
-  barcodes_file = bc_allow,
-  k8 = path.expand('~/k8') # apt does not package k8 with minimap2
+  barcodes_file = bc_allow
 )
 ```
 
