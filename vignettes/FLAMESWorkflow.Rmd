@@ -448,14 +448,19 @@ to `FLT-seq`, where matching short-reads are available for both the
 smaller sub-sample and the larger sub-sample, we provide some additional
 plotting functions:
 
-```{r sc_umap, eval=FALSE}
-multiAssay <- combine_sce(
-  sce_lib90,
-  sce_lib10,
-  sce
-)
-rowData(sce)[rowData(sce)$transcript_id =='ENST00000391751.7', ]
-sc_umap_expression("ENSG00000170889.14", multiAssay)
+```{r sc_umap}
+sce_lr <- altExp(sce, 'gene')
+altExp(sce) <- NULL
+altExp(sce_lr, 'transcript') <- sce
+counts(sce_lr) <- as.matrix(counts(sce_lr)) 
+rownames(sce_lr) <- str_remove(rownames(sce_lr), "\\..*")
+colnames(sce_lib90) <- sce_lib90$Barcode
+combined_sce <- combine_sce(sce_lr, sce_lib90) |>
+  scuttle::logNormCounts() |>
+  scater::runPCA() |>
+  scater::runUMAP()
+
+plot_isoform_reduced_dim(combined_sce, "ENSG00000170889.14")
 ```
 
 ```{r softwareinfo}
